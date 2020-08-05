@@ -1,0 +1,18 @@
+import 'package:flutter/material.dart';
+import 'package:truly_pakistan_fyp/ui/widgets/travelogue_post_widget.dart';
+
+class MarketplaceScreen extends StatefulWidget {
+  @override
+  _MarketplaceScreenState createState() => _MarketplaceScreenState();
+}
+
+class _MarketplaceScreenState extends State<MarketplaceScreen> {
+  @override
+  Widget build(BuildContext context) {
+   return Scaffold(
+     body: Center(
+       child: Text("Marketplace"),
+     ),
+   );
+  }
+}
