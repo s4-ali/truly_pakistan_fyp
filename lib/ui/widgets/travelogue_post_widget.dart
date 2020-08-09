@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class TraveloguePostWidget extends StatefulWidget {
@@ -97,14 +98,19 @@ class _TraveloguePostWidgetState extends State<TraveloguePostWidget> {
 
   Widget getSingleMediaView() {
     return Container(
-      margin: EdgeInsets.only(top: 4.0, left: 16.0, right: 16.0,bottom: 16.0),
+      margin: EdgeInsets.only(top: 8.0, left: 16.0, right: 16.0,bottom: 16.0),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         boxShadow: [BoxShadow(color: Colors.black.withAlpha(35),blurRadius: 6,offset: Offset(0,3),spreadRadius: 4)],
       ),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(10),
-        child: Image.network(widget.images[0],width: double.infinity,)
+        child: CachedNetworkImage(
+          imageUrl: widget.images[0],
+          width: double.infinity,
+          placeholder: (context, url) => CircularProgressIndicator(),
+          errorWidget: (context, url, error) => Icon(Icons.error,color: Colors.red,),
+        )
       ),
     );
   }
