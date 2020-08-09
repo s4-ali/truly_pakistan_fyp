@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:truly_pakistan_fyp/providers/theme_provider.dart';
 import 'package:truly_pakistan_fyp/ui/screens/home_screen.dart';
+import 'package:truly_pakistan_fyp/ui/screens/travelogue/view_media_post.dart';
 
 void main() {
   runApp(
@@ -28,7 +29,7 @@ class MyApp extends StatelessWidget {
             title: 'Flutter Demo',
             theme: Provider.of<ThemeProvider>(context).currentThemeData,
             debugShowCheckedModeBanner: false,
-            home: HomeScreen(),
+            home: ViewMediaPost(),
           );
         },
       ),
