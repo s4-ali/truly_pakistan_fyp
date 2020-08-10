@@ -108,6 +108,23 @@ class _ViewCommunityPostScreenState extends State<ViewCommunityPostScreen> {
                   padding: EdgeInsets.only(left: 16,right: 16,top: 8,bottom: 8),
                   child: Text("#Tag1 Tag2",style: theme.textTheme.subtitle1,),
                 ),
+                Row(
+                  children: <Widget>[
+                    IconButton(
+                      onPressed: (){},
+                      icon: Icon(Icons.arrow_upward),
+                      iconSize: 30,
+                      color: theme.primaryColor,
+                    ),
+                    Text("23",style: TextStyle(fontSize: 16,color: theme.primaryColor),),
+                    IconButton(
+                      onPressed: (){},
+                      icon: Icon(Icons.arrow_downward),
+                      iconSize: 30,
+                      color: theme.primaryColor,
+                    ),
+                  ],
+                )
               ],
             ),
           ),
