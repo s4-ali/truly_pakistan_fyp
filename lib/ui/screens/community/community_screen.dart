@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
+import 'package:truly_pakistan_fyp/ui/screens/community/add_community_post_screen.dart';
 import 'package:truly_pakistan_fyp/ui/widgets/community_post_widget.dart';
 
 class CommunityScreen extends StatefulWidget {
@@ -17,7 +19,7 @@ class _CommunityScreenState extends State<CommunityScreen> {
         elevation: 0,
         actions: <Widget>[
           IconButton(onPressed: (){
-
+            pushNewScreen(context, screen: AddCommunityPostScreen());
           },icon: Icon(Icons.add,color: Theme.of(context).primaryColor,),),
         ],
       ),
@@ -25,6 +27,12 @@ class _CommunityScreenState extends State<CommunityScreen> {
       body: Center(
         child: ListView(
           children: <Widget>[
+            CommunityPostWidget(),
+            CommunityPostWidget(),
+            CommunityPostWidget(),
+            CommunityPostWidget(),
+            CommunityPostWidget(),
+            CommunityPostWidget(),
             CommunityPostWidget(),
             CommunityPostWidget(),
           ],

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
+import 'package:truly_pakistan_fyp/ui/screens/travelogue/add_media_post_screen.dart';
 import 'package:truly_pakistan_fyp/ui/widgets/travelogue_post_widget.dart';
 
 class NewsFeedScreen extends StatefulWidget {
@@ -9,14 +11,17 @@ class NewsFeedScreen extends StatefulWidget {
 class _NewsFeedScreenState extends State<NewsFeedScreen> {
   @override
   Widget build(BuildContext context) {
+    print("build");
     return Scaffold(
       appBar: AppBar(
         title: Text("TrulyPakistan",style: TextStyle(color: Theme.of(context).primaryColor),),
         backgroundColor: Theme.of(context).canvasColor,
         elevation: 0,
         actions: <Widget>[
-          IconButton(onPressed: (){
-
+          IconButton(
+            onPressed: (){
+              print("onPressed");
+              pushNewScreen(context, screen: AddMediaPostScreen(),withNavBar: false);
           },icon: Icon(Icons.add,color: Theme.of(context).primaryColor,),),
         ],
       ),

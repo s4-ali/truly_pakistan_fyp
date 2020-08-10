@@ -1,5 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
+import 'package:truly_pakistan_fyp/ui/screens/travelogue/view_media_post_screen.dart';
 
 class TraveloguePostWidget extends StatefulWidget {
 
@@ -123,16 +125,21 @@ class _TraveloguePostWidgetState extends State<TraveloguePostWidget> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: (){
-
+        pushNewScreen(context, screen: ViewMediaPostScreen(),withNavBar: false);
       },
       child: Container(
+        margin: EdgeInsets.only(bottom: 16),
+        decoration: BoxDecoration(
+          color: Theme.of(context).backgroundColor,
+          boxShadow: [BoxShadow(color: Colors.black12,blurRadius: 3,offset: Offset(0,3))]
+        ),
         child: Column(
           children: <Widget>[
             getMediaView(),
             getUserSection(),
             getTextSection(),
             getActionSection(),
-            getBottomPadding(),
+//            getBottomPadding(),
           ],
         ),
       ),

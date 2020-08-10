@@ -9,7 +9,7 @@ class ThemeProvider with ChangeNotifier {
       fontFamily: "OpenSans",
       brightness: Brightness.light,
       primaryColor: Color(0xFF1BA874),
-      accentColor: Color(0xFFE7E7E7),
+      accentColor: Color(0xFFEEEEEE),
       canvasColor: Color(0xFFF3F3F3),
       backgroundColor: Colors.white
     ),

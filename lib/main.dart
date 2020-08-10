@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:truly_pakistan_fyp/providers/theme_provider.dart';
 import 'package:truly_pakistan_fyp/ui/screens/community/add_community_post_screen.dart';
 import 'package:truly_pakistan_fyp/ui/screens/community/view_community_post_screen.dart';
+import 'package:truly_pakistan_fyp/ui/screens/home_screen.dart';
 import 'file:///C:/Projects/Flutter/truly_pakistan_fyp/lib/ui/screens/community/community_screen.dart';
 import 'package:truly_pakistan_fyp/ui/screens/travelogue/add_media_post_screen.dart';
 
@@ -31,7 +32,7 @@ class MyApp extends StatelessWidget {
             title: 'Flutter Demo',
             theme: Provider.of<ThemeProvider>(context).currentThemeData,
             debugShowCheckedModeBanner: false,
-            home: ViewCommunityPostScreen(),
+            home: HomeScreen(),
           );
         },
       ),

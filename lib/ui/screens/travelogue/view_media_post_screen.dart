@@ -200,7 +200,7 @@ class _ViewMediaPostScreenState extends State<ViewMediaPostScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey,
+      backgroundColor: Colors.black,
       body: Stack(
         children: <Widget>[
           Positioned.fill(

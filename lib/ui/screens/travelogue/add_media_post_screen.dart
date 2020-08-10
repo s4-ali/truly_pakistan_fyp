@@ -11,10 +11,10 @@ class _AddMediaPostScreenState extends State<AddMediaPostScreen> {
   Widget build(BuildContext context) {
     var theme=Theme.of(context);
     return Scaffold(
-      backgroundColor: Theme.of(context).canvasColor,
+      backgroundColor: Theme.of(context).backgroundColor,
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: theme.canvasColor,
+        backgroundColor: theme.backgroundColor,
         centerTitle: true,
         title: Text("Create Travelogue",style: TextStyle(color: theme.primaryColor),),
         leading: IconButton(
