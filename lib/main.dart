@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:truly_pakistan_fyp/providers/theme_provider.dart';
+import 'package:truly_pakistan_fyp/ui/screens/community_screen.dart';
 import 'package:truly_pakistan_fyp/ui/screens/travelogue/add_media_post_screen.dart';
 
 Future<void> main() async {
@@ -28,7 +29,7 @@ class MyApp extends StatelessWidget {
             title: 'Flutter Demo',
             theme: Provider.of<ThemeProvider>(context).currentThemeData,
             debugShowCheckedModeBanner: false,
-            home: AddMediaPostScreen(),
+            home: CommunityScreen(),
           );
         },
       ),
