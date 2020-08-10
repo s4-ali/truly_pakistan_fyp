@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:truly_pakistan_fyp/static_data.dart';
 import 'package:truly_pakistan_fyp/utils.dart';
 
-class ViewMediaPost extends StatefulWidget {
+class ViewMediaPostScreen extends StatefulWidget {
   @override
-  _ViewMediaPostState createState() => _ViewMediaPostState();
+  _ViewMediaPostScreenState createState() => _ViewMediaPostScreenState();
 }
 
-class _ViewMediaPostState extends State<ViewMediaPost> {
+class _ViewMediaPostScreenState extends State<ViewMediaPostScreen> {
   bool _isOptionsVisible=false;
   bool _isActive=false;
 

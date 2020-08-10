@@ -9,11 +9,13 @@ class ThemeProvider with ChangeNotifier {
       fontFamily: "OpenSans",
       brightness: Brightness.light,
       primaryColor: Color(0xFF1BA874),
-      accentColor: Colors.red),
+      accentColor: Color(0xFFE7E7E7)
+    ),
     ThemeData(
         brightness: Brightness.dark,
         primaryColor: Color(0xFF038052),
-        accentColor: Colors.yellowAccent)
+        accentColor: Colors.grey
+    ),
   ];
 
   AppTheme _currentTheme = AppTheme.DARK;

@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:truly_pakistan_fyp/providers/theme_provider.dart';
-import 'package:truly_pakistan_fyp/ui/screens/home_screen.dart';
-import 'package:truly_pakistan_fyp/ui/screens/travelogue/view_media_post.dart';
+import 'package:truly_pakistan_fyp/ui/screens/travelogue/add_media_post_screen.dart';
 
-void main() {
+Future<void> main() async {
   runApp(
     MultiProvider(
       providers: [
@@ -29,7 +28,7 @@ class MyApp extends StatelessWidget {
             title: 'Flutter Demo',
             theme: Provider.of<ThemeProvider>(context).currentThemeData,
             debugShowCheckedModeBanner: false,
-            home: ViewMediaPost(),
+            home: AddMediaPostScreen(),
           );
         },
       ),
