@@ -61,7 +61,7 @@ class _AddMediaPostScreenState extends State<AddMediaPostScreen> {
                 decoration: BoxDecoration(
                     color: Theme.of(context).accentColor,
                     borderRadius: BorderRadius.circular(50),
-                    boxShadow: [BoxShadow(color: Colors.black12,spreadRadius: 3,offset: Offset(0,2),blurRadius: 2)],
+                    boxShadow: [BoxShadow(color: Colors.black12,spreadRadius: 0,offset: Offset(0,2),blurRadius: 2)],
                 ),
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16,vertical: 8),
@@ -105,7 +105,7 @@ class _AddMediaPostScreenState extends State<AddMediaPostScreen> {
                 decoration: BoxDecoration(
                     color: Theme.of(context).accentColor,
                     borderRadius: BorderRadius.circular(50),
-                    boxShadow: [BoxShadow(color: Colors.black12,spreadRadius: 3,offset: Offset(0,2),blurRadius: 2)]
+                    boxShadow: [BoxShadow(color: Colors.black12,spreadRadius: 0,offset: Offset(0,2),blurRadius: 2)]
                 ),
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16,vertical: 8),
@@ -151,7 +151,7 @@ class _AddMediaPostScreenState extends State<AddMediaPostScreen> {
           width: 100,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(16),
-            boxShadow: [BoxShadow(color: Colors.black12,spreadRadius: 3,offset: Offset(0,2),blurRadius: 2)]
+            boxShadow: [BoxShadow(color: Colors.black12,spreadRadius: 0,offset: Offset(0,2),blurRadius: 2)]
           ),
           child: ClipRRect(
             borderRadius: BorderRadius.circular(16),

@@ -9,19 +9,19 @@ class ThemeProvider with ChangeNotifier {
       fontFamily: "OpenSans",
       brightness: Brightness.light,
       primaryColor: Color(0xFF1BA874),
-      accentColor: Color(0xFFEEEEEE),
-      canvasColor: Color(0xFFF3F3F3),
+      accentColor: Color(0xFFF4F5F7),
+      canvasColor: Color(0xFFF6F6F6),
       backgroundColor: Colors.white
     ),
     ThemeData(
         brightness: Brightness.dark,
-        primaryColor: Color(0xFF038052),
-        accentColor: Colors.grey
+        primaryColor: Color(0xFF1BA874),
+        accentColor: Color(0xFF474747),
     ),
   ];
 
   AppTheme _currentTheme = AppTheme.DARK;
-  ThemeData _currentThemeData = themeData[0];
+  ThemeData _currentThemeData = themeData[1];
 
   void switchTheme() => currentTheme == AppTheme.LIGHT
       ? currentTheme = AppTheme.DARK
