@@ -21,7 +21,7 @@ class ThemeProvider with ChangeNotifier {
   ];
 
   AppTheme _currentTheme = AppTheme.DARK;
-  ThemeData _currentThemeData = themeData[1];
+  ThemeData _currentThemeData = themeData[0];
 
   void switchTheme() => currentTheme == AppTheme.LIGHT
       ? currentTheme = AppTheme.DARK

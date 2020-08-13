@@ -68,10 +68,10 @@ class _MarketPlaceState extends State<MarketPlace> {
                     child: Row(
                       children: <Widget>[
                         Expanded(
-                          child: Text("Truly Pakistan",style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 18, fontWeight: FontWeight.bold, letterSpacing: 1),),
+                          child: Text("Marketplace",style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 18, fontWeight: FontWeight.bold, letterSpacing: 1),),
                         ),
                         SizedBox(width: 20,),
-                        Icon(Icons.add, color: Colors.grey[800], size: 30,)
+                        Icon(Icons.more, color: Colors.black, size: 30,)
                       ],
                     ),
                   ),

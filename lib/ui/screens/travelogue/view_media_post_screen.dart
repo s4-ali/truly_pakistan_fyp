@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:truly_pakistan_fyp/static_data.dart';
+import 'package:truly_pakistan_fyp/ui/screens/marketplace/data.dart';
 import 'package:truly_pakistan_fyp/utils.dart';
 
 class ViewMediaPostScreen extends StatefulWidget {
@@ -215,8 +216,7 @@ class _ViewMediaPostScreenState extends State<ViewMediaPostScreen> {
                 width: double.infinity,
                 child: Center(
                   child: CachedNetworkImage(
-                    imageUrl:
-                        "https://thumbor.forbes.com/thumbor/fit-in/1200x0/filters%3Aformat%28jpg%29/https%3A%2F%2Fspecials-images.forbesimg.com%2Fimageserve%2F5d35eacaf1176b0008974b54%2F0x0.jpg%3FcropX1%3D790%26cropX2%3D5350%26cropY1%3D784%26cropY2%3D3349",
+                    imageUrl:adModels[1].imgUrl,
                     width: double.infinity,
                     placeholder: (context, url) => CircularProgressIndicator(),
                     errorWidget: (context, url, error) => Icon(

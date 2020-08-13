@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:truly_pakistan_fyp/static_data.dart';
+import 'package:truly_pakistan_fyp/ui/screens/marketplace/data.dart';
 
 class ViewCommunityPostScreen extends StatefulWidget {
   @override
@@ -28,7 +29,7 @@ class _ViewCommunityPostScreenState extends State<ViewCommunityPostScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Text("Asfar Ali",style: Theme.of(context).textTheme.headline6,),
+                    Text("Meesum Raza",style: Theme.of(context).textTheme.headline6,),
                     Text("1 hour ago",style: TextStyle(color: Theme.of(context).textTheme.bodyText1.color.withAlpha(180),fontSize: 12),),
                   ],
                 ),
@@ -52,7 +53,7 @@ class _ViewCommunityPostScreenState extends State<ViewCommunityPostScreen> {
       child: ClipRRect(
           borderRadius: BorderRadius.circular(10),
           child: CachedNetworkImage(
-            imageUrl: imageUrl,
+            imageUrl: adModels[6].imgUrl,
             width: double.infinity,
             placeholder: (context, url) => CircularProgressIndicator(),
             errorWidget: (context, url, error) => Icon(Icons.error,color: Colors.red,),
@@ -139,7 +140,7 @@ class _ViewCommunityPostScreenState extends State<ViewCommunityPostScreen> {
             child: TextField(
               decoration: InputDecoration(
                   border: InputBorder.none,
-                  hintText: "Title"
+                  hintText: "Got an answer?"
               ),
             ),
           ),
@@ -175,7 +176,7 @@ class _ViewCommunityPostScreenState extends State<ViewCommunityPostScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Text("Iqra Javed",style: theme.textTheme.headline6.copyWith(color: theme.primaryColor),),
+                      Text("Saad Ansar",style: theme.textTheme.headline6.copyWith(color: theme.primaryColor),),
                       Text(loremIpsum)
                     ],
                   ),

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'file:///C:/Projects/Flutter/truly_pakistan_fyp/lib/ui/screens/community/community_screen.dart';
 import 'package:truly_pakistan_fyp/ui/screens/marketplace_screen.dart';
+import 'package:truly_pakistan_fyp/ui/screens/notifications_screen.dart';
 import 'file:///C:/Projects/Flutter/truly_pakistan_fyp/lib/ui/screens/travelogue/news_feed_screen.dart';
 import 'package:truly_pakistan_fyp/ui/screens/profile_screen.dart';
 
@@ -48,6 +49,12 @@ class _HomeScreenState extends State<HomeScreen> {
         inactiveColor: inactiveColor,
       ),
       PersistentBottomNavBarItem(
+        icon: Icon(Icons.notifications),
+        title: ("Notification"),
+        activeColor: activeColor,
+        inactiveColor: inactiveColor,
+      ),
+      PersistentBottomNavBarItem(
         icon: Icon(Icons.person),
         title: ("Profile"),
         activeColor: activeColor,
@@ -61,6 +68,7 @@ class _HomeScreenState extends State<HomeScreen> {
       NewsFeedScreen(),
       CommunityScreen(),
       MarketplaceScreen(),
+      NotificationsScreen(),
       ProfileScreen(),
     ];
   }
