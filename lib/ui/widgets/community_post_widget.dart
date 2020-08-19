@@ -33,18 +33,20 @@ class CommunityPostWidget extends StatelessWidget {
                   ),
                 ),
                 SizedBox(width: 8,),
-                Wrap(
-                  direction: Axis.vertical,
-                  children: <Widget>[
-                    Text(
-                      "Whats best place for breakfast in lahore?",
-                      style: TextStyle(fontSize: 16),
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      softWrap: false,
-                    ),
-                    Text("#Tag1  #Tag1",style: Theme.of(context).textTheme.caption,)
-                  ],
+                Flexible(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        "Whats best place for breakfast in lahore?",
+                        style: TextStyle(fontSize: 16),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        softWrap: false,
+                      ),
+                      Text("#Tag1  #Tag1",style: Theme.of(context).textTheme.caption,),
+                    ],
+                  ),
                 ),
               ],
             ),

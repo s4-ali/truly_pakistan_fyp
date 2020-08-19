@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:truly_pakistan_fyp/providers/theme_provider.dart';
-import 'package:truly_pakistan_fyp/ui/screens/auth/flutter_login.dart';
-import 'package:truly_pakistan_fyp/ui/screens/community/add_community_post_screen.dart';
-import 'package:truly_pakistan_fyp/ui/screens/community/view_community_post_screen.dart';
+import 'package:truly_pakistan_fyp/ui/screens/community/community_screen.dart';
 import 'package:truly_pakistan_fyp/ui/screens/home_screen.dart';
+import 'package:truly_pakistan_fyp/ui/screens/settings_screen.dart';
 import 'package:truly_pakistan_fyp/ui/screens/splash_screen.dart';
-import 'file:///C:/Projects/Flutter/truly_pakistan_fyp/lib/ui/screens/community/community_screen.dart';
-import 'package:truly_pakistan_fyp/ui/screens/travelogue/add_media_post_screen.dart';
 
 Future<void> main() async {
   runApp(
@@ -34,7 +31,7 @@ class MyApp extends StatelessWidget {
             title: 'Flutter Demo',
             theme: Provider.of<ThemeProvider>(context).currentThemeData,
             debugShowCheckedModeBanner: false,
-            home: HomeScreen(),
+            home: SplashScreen(),
           );
         },
       ),

@@ -103,7 +103,7 @@ class _TraveloguePostWidgetState extends State<TraveloguePostWidget> {
       margin: EdgeInsets.only(top: 8.0, left: 16.0, right: 16.0,bottom: 16.0),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
-        boxShadow: [BoxShadow(color: Colors.black.withAlpha(35),blurRadius: 6,offset: Offset(0,3),spreadRadius: 4)],
+        boxShadow: [BoxShadow(color: Colors.black.withAlpha(35),blurRadius: 6,offset: Offset(2,5))],
       ),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(10),

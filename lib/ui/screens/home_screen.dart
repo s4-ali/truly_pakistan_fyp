@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'file:///C:/Projects/Flutter/truly_pakistan_fyp/lib/ui/screens/community/community_screen.dart';
 import 'package:truly_pakistan_fyp/ui/screens/marketplace_screen.dart';
@@ -69,7 +70,7 @@ class _HomeScreenState extends State<HomeScreen> {
       CommunityScreen(),
       MarketplaceScreen(),
       NotificationsScreen(),
-      ProfileScreen(),
+      ProfileScreen(isCurrentUser: true,),
     ];
   }
 
@@ -96,10 +97,21 @@ class _HomeScreenState extends State<HomeScreen> {
           curve: Curves.ease,
           duration: Duration(milliseconds: 200),
         ),
-        navBarStyle: NavBarStyle.style13, // Choose the nav bar style with this property.
+        navBarStyle: NavBarStyle.style13,
+        onItemSelected: onItemSelected,// Choose the nav bar style with this property.
       ),
     );
   }
 
 
+
+  void onItemSelected(int value) {
+    if(value==4){
+      SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent,
+      ));
+    }else{
+      SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
+    }
+  }
 }

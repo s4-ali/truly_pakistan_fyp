@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class AddCommunityPostScreen extends StatefulWidget {
@@ -32,6 +33,7 @@ class _AddCommunityPostScreenState extends State<AddCommunityPostScreen> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
+          _getAddMediaSection(),
           Container(
             margin: EdgeInsets.only(left: 16,right: 16),
             padding: EdgeInsets.symmetric(horizontal: 16,vertical: 4),
@@ -108,6 +110,42 @@ class _AddCommunityPostScreenState extends State<AddCommunityPostScreen> {
           ),
         ],
       ),
+    );
+  }
+
+
+  Widget _getAddMediaSection() {
+    return Row(
+      children: <Widget>[
+        Container(
+          margin: EdgeInsets.only(left: 16,bottom: 16),
+          height: 100,
+          width: 100,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(16),
+              boxShadow: [BoxShadow(color: Colors.black12,spreadRadius: 0,offset: Offset(0,2),blurRadius: 2)]
+          ),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(16),
+            child: CachedNetworkImage(
+              imageUrl: "https://picsum.photos/seed/picsum/200/200",
+              fit: BoxFit.fill,
+            ),
+          ),
+        ),
+        Container(
+          margin: EdgeInsets.only(left: 16,bottom: 16),
+          height: 100,
+          width: 100,
+          decoration: BoxDecoration(
+              color: Theme.of(context).accentColor,
+              borderRadius: BorderRadius.circular(16)
+          ),
+          child: Center(
+            child: Icon(Icons.add,color: Theme.of(context).textTheme.bodyText1.color,size: 50,),
+          ),
+        ),
+      ],
     );
   }
 }

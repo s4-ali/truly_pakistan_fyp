@@ -10,7 +10,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Text("Notifications"),
+        child: Text("Ohh! You don't have any notifications"),
       ),
     );
   }
