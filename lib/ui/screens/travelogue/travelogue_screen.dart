@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:truly_pakistan_fyp/ui/screens/marketplace/data.dart';
-import 'package:truly_pakistan_fyp/ui/screens/travelogue/add_media_post_screen.dart';
+import 'package:truly_pakistan_fyp/ui/screens/travelogue/add_travelogue_screen.dart';
 import 'package:truly_pakistan_fyp/ui/widgets/travelogue_post_widget.dart';
 
-class NewsFeedScreen extends StatefulWidget {
+class TravelogueScreen extends StatefulWidget {
   @override
-  _NewsFeedScreenState createState() => _NewsFeedScreenState();
+  _TravelogueScreenState createState() => _TravelogueScreenState();
 }
 
-class _NewsFeedScreenState extends State<NewsFeedScreen> {
+class _TravelogueScreenState extends State<TravelogueScreen> {
   @override
   Widget build(BuildContext context) {
     print("build");
@@ -22,7 +22,7 @@ class _NewsFeedScreenState extends State<NewsFeedScreen> {
           IconButton(
             onPressed: (){
               print("onPressed");
-              pushNewScreen(context, screen: AddMediaPostScreen(),withNavBar: false);
+              pushNewScreen(context, screen: AddTravelogueScreen(),withNavBar: false);
           },icon: Icon(Icons.add,color: Theme.of(context).primaryColor,),),
         ],
       ),

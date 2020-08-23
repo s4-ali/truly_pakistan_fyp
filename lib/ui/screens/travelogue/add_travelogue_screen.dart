@@ -1,12 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
-class AddMediaPostScreen extends StatefulWidget {
+class AddTravelogueScreen extends StatefulWidget {
   @override
-  _AddMediaPostScreenState createState() => _AddMediaPostScreenState();
+  _AddTravelogueScreenState createState() => _AddTravelogueScreenState();
 }
 
-class _AddMediaPostScreenState extends State<AddMediaPostScreen> {
+class _AddTravelogueScreenState extends State<AddTravelogueScreen> {
   @override
   Widget build(BuildContext context) {
     var theme=Theme.of(context);

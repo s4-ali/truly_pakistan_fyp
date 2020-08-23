@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
-import 'package:truly_pakistan_fyp/ui/screens/travelogue/view_media_post_screen.dart';
+import 'package:truly_pakistan_fyp/ui/screens/travelogue/view_travelogue_screen.dart';
 
 class TraveloguePostWidget extends StatefulWidget {
 

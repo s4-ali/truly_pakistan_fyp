@@ -2,11 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
-import 'file:///C:/Projects/Flutter/truly_pakistan_fyp/lib/ui/screens/community/community_screen.dart';
 import 'package:truly_pakistan_fyp/ui/screens/marketplace_screen.dart';
 import 'package:truly_pakistan_fyp/ui/screens/notifications_screen.dart';
-import 'file:///C:/Projects/Flutter/truly_pakistan_fyp/lib/ui/screens/travelogue/news_feed_screen.dart';
 import 'package:truly_pakistan_fyp/ui/screens/profile_screen.dart';
+import 'package:truly_pakistan_fyp/ui/screens/travelogue/travelogue_screen.dart';
+
+import 'community/community_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -66,7 +67,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   List<Widget> _buildScreens() {
     return [
-      NewsFeedScreen(),
+      TravelogueScreen(),
       CommunityScreen(),
       MarketplaceScreen(),
       NotificationsScreen(),
