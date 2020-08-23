@@ -16,6 +16,8 @@ class CommunityPostModel{
   List<String> locations;
   List<String> images;
   List<CommunityAnswerModel> answers;
+  String timeElapsed="1 minute ago";
+  String id;
 
   CommunityPostModel fromMap(Map<String, dynamic> map) {
     if(map["title"]!=null && map["title"] is String)
@@ -33,13 +35,25 @@ class CommunityPostModel{
     if(map["postedAt"]!=null && map["postedAt"] is DateTime)
       postedAt=map["postedAt"];
     if(map["user"]!=null && map["user"] is Map<dynamic,dynamic>)
-      user=map["user"];
-    if(map["tags"]!=null && map["tags"] is List<String>)
-      tags=map["tags"];
-    if(map["locations"]!=null && map["locations"] is List<String>)
-      locations=map["locations"];
-    if(map["images"]!=null && map["images"] is List<String>)
-      images=map["images"];
+      user=UserModel().fromMap(map["user"]);
+    if(map["tags"]!=null) {
+      tags=List();
+      for(var s in map["tags"] as List<dynamic>){
+        tags.add(s.toString());
+      }
+    }
+    if(map["locations"]!=null) {
+      locations=List();
+      for(var s in map["locations"] as List<dynamic>){
+        locations.add(s.toString());
+      }
+    }
+    if(map["images"]!=null) {
+      images=List();
+      for(var s in map["images"] as List<dynamic>){
+        images.add(s.toString());
+      }
+    }
     return this;
   }
 

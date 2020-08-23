@@ -43,7 +43,7 @@ class MyApp extends StatelessWidget {
             title: 'Flutter Demo',
             theme: Provider.of<ThemeProvider>(context).currentThemeData,
             debugShowCheckedModeBanner: false,
-            home: AddCommunityPostScreen(),
+            home: SplashScreen(),
           );
         },
       ),

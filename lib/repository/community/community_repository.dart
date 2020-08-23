@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/services.dart';
 
 class CommunityRepository {
+
   Future<List<DocumentSnapshot>> getCommunityPosts() async {
     return FirebaseFirestore.instance
         .collection("Community")
@@ -33,7 +34,15 @@ class CommunityRepository {
     } on PlatformException catch (ex) {
       return ex.message;
     }
+  }
 
+  Future voteOnPost(String postId,String uid,Map<String,dynamic> data)async{
+    await FirebaseFirestore.instance
+        .collection("Community")
+        .doc(postId)
+        .collection("Votes")
+        .doc(uid)
+        .set(data);
   }
 
   Future<List<DocumentSnapshot>>

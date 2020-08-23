@@ -12,4 +12,11 @@ class UserModel{
     map["profileUrl"]=profileUrl;
     return map;
   }
+
+  UserModel fromMap(Map<String,dynamic> map) {
+    uid=map["uid"];
+    name=map["name"];
+    profileUrl=map["profileUrl"];
+    return this;
+  }
 }
