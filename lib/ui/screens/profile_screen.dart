@@ -230,7 +230,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ],
                   ),
                 ),
-                TraveloguePostWidget(images: [adModels[6].imgUrl],)
               ],
             ),
           ),
