@@ -1,25 +1,49 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/services.dart';
-import 'package:truly_pakistan_fyp/models/community/community_post_model.dart';
 
-class CommunityRepository{
-  Future<List<DocumentSnapshot>> getCommunityPosts() async{
-    return Firestore.instance
+class CommunityRepository {
+  Future<List<DocumentSnapshot>> getCommunityPosts() async {
+    return FirebaseFirestore.instance
         .collection("Community")
-        .getDocuments()
+        .get()
         .then(
-            (value) => value!=null? value.documents: null
+            (value) => value != null ? value.docs : null
     );
   }
-  
-  Future<String> addCommunityPost(Map<String,dynamic> data)async{
+
+  Future<String> addCommunityPost(Map<String, dynamic> data) async {
     try {
-      Firestore.instance.collection("Community").document().setData(data);
+      await FirebaseFirestore.instance
+          .collection("Community")
+          .doc()
+          .set(data);
       return null;
-    }on PlatformException catch(ex){
+    } on PlatformException catch (ex) {
       return ex.message;
     }
-  } 
+  }
 
+  Future<String> addAnswerTo(String postId,Map<String,dynamic> data)async{
+    try {
+      await FirebaseFirestore.instance
+          .collection("Community")
+          .doc(postId)
+          .collection("Answers").doc().set(data);
+      return null;
+    } on PlatformException catch (ex) {
+      return ex.message;
+    }
 
+  }
+
+  Future<List<DocumentSnapshot>>
+    getCommunityAnswersFor(String postId)
+    async{
+      return FirebaseFirestore.instance
+          .collection("Community")
+          .doc(postId)
+          .collection("Answers").get().then(
+              (value) => value != null ? value.docs : null
+      );
+  }
 }

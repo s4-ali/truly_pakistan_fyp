@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:truly_pakistan_fyp/core/authentication.dart';
@@ -20,41 +21,40 @@ class _SplashScreenState extends State<SplashScreen> {
 
   void navigationPage() async{
     Authentication authService=Authentication();
-    authService.currentUser().then((user){
-      if(user==null){
-        Navigator.pushReplacement(context, MaterialPageRoute(builder:(context)=>FlutterLogin(
-          onLogin: (s) async {
-            try {
-              await authService.signInWithEmailAndPassword(s.name, s.password);
-              Navigator.push(context, MaterialPageRoute(builder: (context)=>HomeScreen()));
-            } on Exception catch(e){
-              return e.toString();
-            }
-            return null;
-          },
-          onSignup: (s)async{
-            try{
-              await authService.createUserWithEmailAndPassword(s.name, s.password, "Asfar");
-              Navigator.push(context, MaterialPageRoute(builder: (context)=>HomeScreen()));
-            }on Exception catch(e){
-              return e.toString();
-            }
-            return null;
-          },
-          onRecoverPassword: (s)async{
-            try {
-              await authService.resetPassword(s);
-            } on Exception catch(e){
-              print(e);
-              return e.toString();
-            }
-            return null;
-          },
-        ),));
-      }else{
-        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>HomeScreen()));
-      }
-    });
+    final User user = authService.currentUser();
+    if(user==null){
+      Navigator.pushReplacement(context, MaterialPageRoute(builder:(context)=>FlutterLogin(
+        onLogin: (s) async {
+          try {
+            await authService.signInWithEmailAndPassword(s.name, s.password);
+            Navigator.push(context, MaterialPageRoute(builder: (context)=>HomeScreen()));
+          } on Exception catch(e){
+            return e.toString();
+          }
+          return null;
+        },
+        onSignup: (s)async{
+          try{
+            await authService.createUserWithEmailAndPassword(s.name, s.password, "Asfar");
+            Navigator.push(context, MaterialPageRoute(builder: (context)=>HomeScreen()));
+          }on Exception catch(e){
+            return e.toString();
+          }
+          return null;
+        },
+        onRecoverPassword: (s)async{
+          try {
+            await authService.resetPassword(s);
+          } on Exception catch(e){
+            print(e);
+            return e.toString();
+          }
+          return null;
+        },
+      ),));
+    }else{
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>HomeScreen()));
+    }
   }
 
   @override

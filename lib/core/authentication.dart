@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 abstract class BaseAuth {
   Future<String> signInWithEmailAndPassword(String email, String password);
   Future<String> createUserWithEmailAndPassword(String email, String password,String name);
-  Future<FirebaseUser> currentUser();
+  User currentUser();
   Future<void> signOut();
 }
 
@@ -16,36 +16,32 @@ class Authentication implements BaseAuth {
   @override
   Future<String> signInWithEmailAndPassword(String email, String password) async {
     print("signInWithEmailAndPassword");
-    final FirebaseUser user = (await _firebaseAuth.signInWithEmailAndPassword(email: email, password: password)).user;
+    final User user = (await _firebaseAuth.signInWithEmailAndPassword(email: email, password: password)).user;
     return user?.uid;
   }
 
   @override
   Future<String> createUserWithEmailAndPassword(String email, String password,String name) async {
-    final FirebaseUser user = (await _firebaseAuth.createUserWithEmailAndPassword(email: email, password: password)).user;
-    UserUpdateInfo userInfo=UserUpdateInfo();
-    userInfo.displayName=name;
-    await user.updateProfile(userInfo);
+    final User user = (await _firebaseAuth.createUserWithEmailAndPassword(email: email, password: password)).user;
+    await user.updateProfile(displayName: name);
     await user.sendEmailVerification();
-    await Firestore.instance.collection("users").document(user.uid).setData({
+    await FirebaseFirestore.instance.collection("users").document(user.uid).update({
       "status":1,
       "displayName":name,
       "email":email,
-    },merge: true);
-    await Firestore.instance.collection("users").document(user.uid).setData({},merge: true);
+    });
     return user?.uid;
   }
 
   @override
-  Future<FirebaseUser> currentUser() async {
-    final FirebaseUser user = await _firebaseAuth.currentUser();
+  User currentUser() {
+    final User user = _firebaseAuth.currentUser;
     return user;
   }
 
-  Future<bool> isEmailVerified(){
-    return _firebaseAuth.currentUser().then((user){
-      return user.isEmailVerified;
-    });
+  bool isEmailVerified(){
+    final User user = _firebaseAuth.currentUser;
+    return user.emailVerified;
   }
 
   @override
@@ -53,23 +49,20 @@ class Authentication implements BaseAuth {
     return _firebaseAuth.signOut();
   }
 
-  Future<bool> isPhoneNumberAdded() {
-    return _firebaseAuth.currentUser().then((user){
-      print(user.phoneNumber);
-      return user.phoneNumber!=null;
-    });
+  bool isPhoneNumberAdded() {
+    final User user = _firebaseAuth.currentUser;
+    return user.phoneNumber!=null;
   }
 
 
   Future<bool> signInWithCode(String code){
-    AuthCredential authCredential=PhoneAuthProvider.getCredential(verificationId: _smsVerificationCode, smsCode: code);
-    return _firebaseAuth.currentUser().then((user) {
-      return user.linkWithCredential(authCredential).then((user) {
-        return true;
-      }).catchError((e) {
-        return false;
-      });
-    });
+    AuthCredential authCredential=PhoneAuthProvider.credential(verificationId: _smsVerificationCode, smsCode: code);
+    final User user = _firebaseAuth.currentUser;
+    return user.linkWithCredential(authCredential)
+        .then(
+            (user) => true)
+        .catchError(
+            (e) =>false);
   }
 
   _addPhoneNumber(BuildContext context,String phoneNumber,Function verificationComplete,Function verificationFailed) async {
@@ -98,7 +91,7 @@ class Authentication implements BaseAuth {
     _smsVerificationCode = verificationId;
   }
 
-  _verificationFailed(AuthException authException, BuildContext context) {
+  _verificationFailed(FirebaseAuthException authException, BuildContext context) {
     final snackBar = SnackBar(content: Text("Exception!! message:" + authException.message.toString()));
     Scaffold.of(context).showSnackBar(snackBar);
   }

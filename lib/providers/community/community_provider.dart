@@ -9,7 +9,7 @@ class CommunityProvider extends ChangeNotifier{
 
   CommunityProvider(){
     _communityRepository=CommunityRepository();
-    loadCommunityPosts();
+//    loadCommunityPosts();
   }
 
   List<CommunityPostModel> getCommunityPosts() => communityPosts;
@@ -24,7 +24,7 @@ class CommunityProvider extends ChangeNotifier{
     _communityRepository.getCommunityPosts().then((value){
       communityPosts.clear();
       for(DocumentSnapshot doc in value){
-        communityPosts.add(CommunityPostModel().fromMap(doc.data));
+        communityPosts.add(CommunityPostModel().fromMap(doc.data()));
       }
       notifyListeners();
     });
