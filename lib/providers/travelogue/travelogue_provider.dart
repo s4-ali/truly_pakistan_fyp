@@ -5,11 +5,11 @@ import 'package:truly_pakistan_fyp/models/travelogue/travelogue_comment_model.da
 import 'package:truly_pakistan_fyp/models/travelogue/travelogue_post_model.dart';
 import 'package:truly_pakistan_fyp/repository/travelogue/travelogue_repository.dart';
 
-class CommunityProvider extends ChangeNotifier{
+class TravelogueProvider extends ChangeNotifier{
   TravelogueRepository _travelogueRepository;
   List<TraveloguePostModel> _traveloguePosts;
 
-  CommunityProvider(){
+  TravelogueProvider(){
     _travelogueRepository=TravelogueRepository();
     loadTraveloguePosts();
   }

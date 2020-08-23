@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:truly_pakistan_fyp/providers/community/community_provider.dart';
 import 'package:truly_pakistan_fyp/providers/theme_provider.dart';
+import 'package:truly_pakistan_fyp/providers/travelogue/travelogue_provider.dart';
 import 'package:truly_pakistan_fyp/ui/screens/community/add_community_post_screen.dart';
 import 'package:truly_pakistan_fyp/ui/screens/community/community_screen.dart';
 import 'package:truly_pakistan_fyp/ui/screens/home_screen.dart';
@@ -18,7 +19,10 @@ Future<void> main() async {
         ),
         ChangeNotifierProvider<CommunityProvider>(
           create: (_) => CommunityProvider(),
-        )
+        ),
+        ChangeNotifierProvider<TravelogueProvider>(
+          create: (_) => TravelogueProvider(),
+        ),
       ],
       child: MyApp(),
     )

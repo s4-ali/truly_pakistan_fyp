@@ -9,7 +9,6 @@ import 'package:truly_pakistan_fyp/models/UserModel.dart';
 import 'package:truly_pakistan_fyp/models/community/community_post_model.dart';
 import 'package:truly_pakistan_fyp/models/image_upload_task.dart';
 import 'package:truly_pakistan_fyp/providers/community/community_provider.dart';
-import 'package:truly_pakistan_fyp/ui/screens/marketplace/data.dart';
 import 'package:truly_pakistan_fyp/utils.dart';
 
 class AddCommunityPostScreen extends StatefulWidget {
@@ -479,7 +478,6 @@ class _AddCommunityPostScreenState extends State<AddCommunityPostScreen> {
 
   void _onImagesUploaded(List<String> urls)async{
     var model=CommunityPostModel();
-    model.images=images;
     model.locations=locations;
     model.tags=tags;
     model.upVotes=0;
