@@ -26,7 +26,7 @@ class _ViewCommunityPostScreenState extends State<ViewCommunityPostScreen> {
   void initState() {
     super.initState();
     _addAnswerController=TextEditingController();
-    _loadComments();
+    _loadAnswers();
     _loadUserVote();
   }
 
@@ -189,28 +189,38 @@ class _ViewCommunityPostScreenState extends State<ViewCommunityPostScreen> {
                   ),
                 ),
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    IconButton(
-                      onPressed: () {
-                        Provider.of<CommunityProvider>(context,listen: false)
-                            .addUpVoteTo(widget.communityPostModel);},
-                      icon: Icon(Icons.arrow_upward),
-                      iconSize: 30,
-                      color: theme.primaryColor,
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        IconButton(
+                          onPressed: () {
+                            Provider.of<CommunityProvider>(context,listen: false)
+                                .addUpVoteTo(widget.communityPostModel);},
+                          icon: Icon(Icons.arrow_upward),
+                          iconSize: 30,
+                          color: theme.primaryColor,
+                        ),
+                        Text(
+                          "${widget.communityPostModel.totalVotes}",
+                          style: TextStyle(fontSize: 16, color: theme.primaryColor),
+                        ),
+                        IconButton(
+                          onPressed: () {
+                            Provider.of<CommunityProvider>(context,listen: false)
+                                .addDownVoteTo(widget.communityPostModel);
+                          },
+                          icon: Icon(Icons.arrow_downward),
+                          iconSize: 30,
+                          color: theme.primaryColor,
+                        ),
+                      ],
                     ),
-                    Text(
-                      "${widget.communityPostModel.totalVotes}",
-                      style: TextStyle(fontSize: 16, color: theme.primaryColor),
-                    ),
-                    IconButton(
-                      onPressed: () {
-                        Provider.of<CommunityProvider>(context,listen: false)
-                            .addDownVoteTo(widget.communityPostModel);
-                      },
-                      icon: Icon(Icons.arrow_downward),
-                      iconSize: 30,
-                      color: theme.primaryColor,
-                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(right:16.0),
+                      child: Text("Share"),
+                    )
                   ],
                 )
               ],
@@ -340,7 +350,7 @@ class _ViewCommunityPostScreenState extends State<ViewCommunityPostScreen> {
     );
   }
 
-  void _loadComments() async {
+  void _loadAnswers() async {
     await Provider.of<CommunityProvider>(context, listen: false)
         .loadAnswersFor(widget.communityPostModel);
     setState(() {

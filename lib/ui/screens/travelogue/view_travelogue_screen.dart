@@ -1,10 +1,19 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:truly_pakistan_fyp/static_data.dart';
-import 'package:truly_pakistan_fyp/ui/screens/marketplace/data.dart';
+import 'package:provider/provider.dart';
+import 'package:truly_pakistan_fyp/models/UserModel.dart';
+import 'package:truly_pakistan_fyp/models/travelogue/travelogue_comment_model.dart';
+import 'package:truly_pakistan_fyp/models/travelogue/travelogue_post_model.dart';
+import 'package:truly_pakistan_fyp/providers/community/community_provider.dart';
+import 'package:truly_pakistan_fyp/providers/travelogue/travelogue_provider.dart';
+import 'package:truly_pakistan_fyp/ui/widgets/comments_bottom_sheet.dart';
 import 'package:truly_pakistan_fyp/utils.dart';
 
 class ViewMediaPostScreen extends StatefulWidget {
+  final TraveloguePostModel traveloguePost;
+
+  ViewMediaPostScreen(this.traveloguePost);
+
   @override
   _ViewMediaPostScreenState createState() => _ViewMediaPostScreenState();
 }
@@ -12,6 +21,21 @@ class ViewMediaPostScreen extends StatefulWidget {
 class _ViewMediaPostScreenState extends State<ViewMediaPostScreen> {
   bool _isOptionsVisible=false;
   bool _isActive=false;
+
+
+  @override
+  void initState() {
+    super.initState();
+    _loadComments();
+  }
+
+  void _loadComments() async {
+    await Provider.of<TravelogueProvider>(context, listen: false)
+        .loadAnswersFor(widget.traveloguePost);
+//    setState(() {
+//
+//    });
+  }
 
   Widget _getBackButton(){
     return Positioned(
@@ -66,7 +90,6 @@ class _ViewMediaPostScreenState extends State<ViewMediaPostScreen> {
     );
   }
 
-
   Widget _buildInfoPanel() {
     return Positioned(
       bottom: 0,
@@ -75,7 +98,7 @@ class _ViewMediaPostScreenState extends State<ViewMediaPostScreen> {
         duration: Duration(milliseconds: 500),
         child: Container(
           decoration: BoxDecoration(
-            color: Colors.black87,
+            color: Colors.black54,
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(16),
               topRight: Radius.circular(16),
@@ -86,10 +109,10 @@ class _ViewMediaPostScreenState extends State<ViewMediaPostScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              getUserSection(),
+              _getUserSection(),
               Padding(
                 padding: const EdgeInsets.only(top:8.0,left: 8,right: 8),
-                child: Text(loremIpsum,style: TextStyle(color: Colors.white),),
+                child: Text(widget.traveloguePost.description,style: TextStyle(color: Colors.white),),
               ),
               Padding(
                 padding: const EdgeInsets.only(top:12.0,left: 8,right: 8),
@@ -101,11 +124,11 @@ class _ViewMediaPostScreenState extends State<ViewMediaPostScreen> {
               ),
               Row(
                 mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
-                  makeLikeButton(),
-                  makeCommentButton(),
-                  makeShareButton(),
+                  _makeLikeButton(),
+                  CommentButtonWidget(widget.traveloguePost),
+                  _makeShareButton(),
                 ],
               ),
             ],
@@ -115,10 +138,9 @@ class _ViewMediaPostScreenState extends State<ViewMediaPostScreen> {
     );
   }
 
-
-  Widget getUserSection() {
+  Widget _getUserSection() {
     return Container(
-      margin: EdgeInsets.only(left: 8.0, right: 8.0,top: 16),
+      margin: EdgeInsets.only(left: 16.0, right: 16.0,top: 16),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         mainAxisSize: MainAxisSize.max,
@@ -127,26 +149,39 @@ class _ViewMediaPostScreenState extends State<ViewMediaPostScreen> {
             children: <Widget>[
               ClipRRect(
                 borderRadius: BorderRadius.circular(50),
-                child: Image.network("https://picsum.photos/seed/picsum/200/200", height: 50.0, width: 50.0,),
+                child: (widget.traveloguePost.user.profileUrl!=null
+                    &&widget.traveloguePost.user.profileUrl.isNotEmpty) ?
+                CachedNetworkImage(
+                  imageUrl: widget.traveloguePost.user.profileUrl,
+                  fit: BoxFit.cover,
+                  height: 50,
+                  width: 50,
+                ):Icon(Icons.person,size: 50,color: Colors.white,),
               ),
               Container(
                 margin: EdgeInsets.only(left: 8.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Text("Asfar Ali",style: TextStyle(color: Colors.white,fontSize: 17,fontWeight: FontWeight.bold),),
-                    Text("1 hour ago",style: TextStyle(color: Colors.white.withAlpha(180),fontSize: 12),),
+                    Text(
+                      widget.traveloguePost.user.name,
+                      style: Theme.of(context)
+                          .textTheme.headline6
+                          .copyWith(color: Colors.white),
+                    ),
+                    Text(widget.traveloguePost.timeElapsed,style: TextStyle(color: Colors.white.withAlpha(180),fontSize: 12),),
                   ],
                 ),
               ),
             ],
           ),
+          Icon(Icons.more_vert,color: Colors.white,)
         ],
       ),
     );
   }
 
-  Widget makeLikeButton() {
+  Widget _makeLikeButton() {
     return GestureDetector(
       onTap: (){
         setState(() {
@@ -155,7 +190,7 @@ class _ViewMediaPostScreenState extends State<ViewMediaPostScreen> {
         );
       },
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+        padding: EdgeInsets.symmetric(vertical: 5),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
@@ -165,26 +200,11 @@ class _ViewMediaPostScreenState extends State<ViewMediaPostScreen> {
         ),
       ),
     );
+  }
 
-  }
-  Widget makeCommentButton() {
+  Widget _makeShareButton() {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-      child: Center(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Icon(Icons.chat, color: Colors.grey, size: 25),
-            SizedBox(width: 5,),
-            Text("Comment", style: TextStyle(color: Colors.grey,fontSize: 17),)
-          ],
-        ),
-      ),
-    );
-  }
-  Widget makeShareButton() {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+      padding: EdgeInsets.symmetric(vertical: 5),
       child: Center(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -216,7 +236,7 @@ class _ViewMediaPostScreenState extends State<ViewMediaPostScreen> {
                 width: double.infinity,
                 child: Center(
                   child: CachedNetworkImage(
-                    imageUrl:adModels[1].imgUrl,
+                    imageUrl:widget.traveloguePost.images[0],
                     width: double.infinity,
                     placeholder: (context, url) => CircularProgressIndicator(),
                     errorWidget: (context, url, error) => Icon(
@@ -238,3 +258,45 @@ class _ViewMediaPostScreenState extends State<ViewMediaPostScreen> {
 
 
 }
+
+class CommentButtonWidget extends StatelessWidget {
+
+  final TraveloguePostModel traveloguePostModel;
+
+  const CommentButtonWidget(this.traveloguePostModel,{Key key}) : super(key: key);
+
+
+  @override
+  Widget build(BuildContext context) {
+    return _makeCommentButton(context);
+  }
+
+  Widget _makeCommentButton(BuildContext context) {
+    return GestureDetector(
+      onTap: (){
+        showModalBottomSheet<CommentsBottomSheet>(
+          isScrollControlled: true,
+          context: context,
+          builder: (context)
+            => CommentsBottomSheet(traveloguePostModel)
+        );
+      },
+      child: Container(
+        padding: EdgeInsets.symmetric(vertical: 5),
+        child: Center(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Icon(Icons.chat, color: Colors.grey, size: 25),
+              SizedBox(width: 5,),
+              Text("Comment", style: TextStyle(color: Colors.grey,fontSize: 17),)
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+
+}
+

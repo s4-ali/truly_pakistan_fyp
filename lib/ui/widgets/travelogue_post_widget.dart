@@ -127,26 +127,31 @@ class _TraveloguePostWidgetState extends State<TraveloguePostWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: (){
-        pushNewScreen(context, screen: ViewMediaPostScreen(),withNavBar: false);
-      },
-      child: Container(
-        margin: EdgeInsets.only(bottom: 16),
-        decoration: BoxDecoration(
-          color: Theme.of(context).backgroundColor,
-          boxShadow: [BoxShadow(color: Colors.black12,blurRadius: 3,offset: Offset(0,3))]
-        ),
-        child: Column(
-          children: <Widget>[
-            _getMediaView(),
-            _getUserSection(),
-            if(widget.traveloguePost.description!=null
-              &&widget.traveloguePost.description.isNotEmpty)
-              _getTextSection(),
-            _getActionSection(),
-          ],
-        ),
+    return Container(
+      margin: EdgeInsets.only(bottom: 16),
+      decoration: BoxDecoration(
+        color: Theme.of(context).backgroundColor,
+        boxShadow: [BoxShadow(color: Colors.black12,blurRadius: 3,offset: Offset(0,3))]
+      ),
+      child: Column(
+        children: <Widget>[
+          GestureDetector(
+            onTap: (){
+              pushNewScreen(context, screen: ViewMediaPostScreen(widget.traveloguePost),withNavBar: false);
+            },
+            child: _getMediaView(),
+          ),
+          _getUserSection(),
+          if(widget.traveloguePost.description!=null
+            &&widget.traveloguePost.description.isNotEmpty)
+            GestureDetector(
+              onTap: (){
+                pushNewScreen(context, screen: ViewMediaPostScreen(widget.traveloguePost),withNavBar: false);
+              },
+              child: _getTextSection(),
+            ),
+          _getActionSection(),
+        ],
       ),
     );
   }

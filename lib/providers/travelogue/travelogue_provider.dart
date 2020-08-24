@@ -48,7 +48,7 @@ class TravelogueProvider extends ChangeNotifier{
     return;
   }
 
-  Future addNewAnswerTo(TraveloguePostModel traveloguePostModel,TravelogueCommentModel comment)async{
+  Future addNewCommentTo(TraveloguePostModel traveloguePostModel,TravelogueCommentModel comment)async{
     await _travelogueRepository.addAnswerTo(traveloguePostModel.id, comment.toMap());
     traveloguePostModel.comments.insert(0,comment);
   }

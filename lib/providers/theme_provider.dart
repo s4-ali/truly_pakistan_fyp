@@ -11,12 +11,18 @@ class ThemeProvider with ChangeNotifier {
       primaryColor: Color(0xFF1BA874),
       accentColor: Color(0xFFF4F5F7),
       canvasColor: Color(0xFFF6F6F6),
-      backgroundColor: Colors.white
+      backgroundColor: Colors.white,
+      bottomSheetTheme: BottomSheetThemeData(
+        backgroundColor: Colors.transparent
+      )
     ),
     ThemeData(
         brightness: Brightness.dark,
         primaryColor: Color(0xFF1BA874),
         accentColor: Color(0xFF474747),
+        bottomSheetTheme: BottomSheetThemeData(
+            backgroundColor: Colors.transparent
+        )
     ),
   ];
 
