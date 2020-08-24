@@ -413,7 +413,7 @@ class _AddTravelogueScreenState extends State<AddTravelogueScreen> {
     imageFiles.forEach((file) {
       var imageUploadTask=ImageUploadTask();
       imageUploadTask.file=file;
-      imageUploadTask.path="path/to/file.png";
+      imageUploadTask.path="Travelogues/";
       imageUploadTasks.add(imageUploadTask);
     });
     List<String> urls=List();

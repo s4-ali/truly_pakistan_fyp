@@ -435,7 +435,7 @@ class _AddCommunityPostScreenState extends State<AddCommunityPostScreen> {
     imageFiles.forEach((file) {
       var imageUploadTask=ImageUploadTask();
       imageUploadTask.file=file;
-      imageUploadTask.path="path/to/file.png";
+      imageUploadTask.path="Community/";
       imageUploadTasks.add(imageUploadTask);
     });
     List<String> urls=List();

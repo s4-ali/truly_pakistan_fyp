@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/services.dart';
 import 'package:truly_pakistan_fyp/models/image_upload_task.dart';
+import 'package:uuid/uuid.dart';
 
 class MediaUploader{
 
@@ -24,6 +25,7 @@ class MediaUploader{
   Stream<ImageUploadTask> uploadMultipleImages(List<ImageUploadTask> imageUploadTasks){
     Future.forEach(imageUploadTasks, (ImageUploadTask imageUploadTask) async {
       try {
+        imageUploadTask.path=imageUploadTask.path+Uuid().v1()+".jpg";
         var result=await FirebaseStorage.instance.ref().child(imageUploadTask.path).putFile(imageUploadTask.file).onComplete;
         imageUploadTask.url=await result.ref.getDownloadURL();
         controller.add(imageUploadTask);
