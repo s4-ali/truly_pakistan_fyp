@@ -6,6 +6,7 @@ class TravelogueRepository {
   Future<List<DocumentSnapshot>> getTraveloguePosts() async {
     return FirebaseFirestore.instance
         .collection("Travelogue")
+        .orderBy("postedAt")
         .get()
         .then(
             (value) => value != null ? value.docs : null

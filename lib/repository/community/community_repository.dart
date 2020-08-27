@@ -6,6 +6,7 @@ class CommunityRepository {
   Future<List<DocumentSnapshot>> getCommunityPosts() async {
     return FirebaseFirestore.instance
         .collection("Community")
+        .orderBy("postedAt")
         .get()
         .then(
             (value) => value != null ? value.docs : null
