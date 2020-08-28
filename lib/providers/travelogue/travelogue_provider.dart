@@ -8,6 +8,7 @@ import 'package:truly_pakistan_fyp/repository/travelogue/travelogue_repository.d
 class TravelogueProvider extends ChangeNotifier{
   TravelogueRepository _travelogueRepository;
   List<TraveloguePostModel> _traveloguePosts;
+  bool _refresh=false;
 
   TravelogueProvider(){
     _travelogueRepository=TravelogueRepository();
@@ -17,11 +18,13 @@ class TravelogueProvider extends ChangeNotifier{
   List<TraveloguePostModel> getTraveloguePosts() => _traveloguePosts;
 
   Future<String> addTraveloguePost(TraveloguePostModel communityPostModel) async {
-    return _travelogueRepository.addTraveloguePost(communityPostModel.toMap());
+    var response=await _travelogueRepository.addTraveloguePost(communityPostModel.toMap());
+    refreshTraveloguePosts();
+    return response;
   }
 
   void loadTraveloguePosts() {
-    if(_traveloguePosts==null)
+    if(_traveloguePosts==null||_refresh)
       _traveloguePosts=List();
     _travelogueRepository.getTraveloguePosts().then((value){
       _traveloguePosts.clear();
@@ -30,11 +33,13 @@ class TravelogueProvider extends ChangeNotifier{
           _traveloguePosts.add(TraveloguePostModel().fromMap(doc.data())..id=doc.id);
         }
       }
+      _refresh=false;
       notifyListeners();
     });
   }
 
-  void refreshCommunityPosts(){
+  void refreshTraveloguePosts(){
+    _refresh=true;
     loadTraveloguePosts();
   }
 

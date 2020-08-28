@@ -1,7 +1,8 @@
 import 'dart:collection';
 
-import 'package:truly_pakistan_fyp/models/UserModel.dart';
 import 'package:truly_pakistan_fyp/models/community/community_answer_model.dart';
+
+import '../user_model.dart';
 
 class CommunityPostModel{
   String title;

@@ -1,7 +1,8 @@
 import 'dart:collection';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:truly_pakistan_fyp/models/UserModel.dart';
+
+import '../user_model.dart';
 
 class CommunityAnswerModel{
   String id;

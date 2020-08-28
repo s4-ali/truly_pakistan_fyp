@@ -1,11 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:truly_pakistan_fyp/models/UserModel.dart';
 import 'package:truly_pakistan_fyp/models/community/community_answer_model.dart';
 import 'package:truly_pakistan_fyp/models/community/community_post_model.dart';
 import 'package:truly_pakistan_fyp/repository/community/community_repository.dart';
-import 'package:truly_pakistan_fyp/static_data.dart';
 
 class CommunityProvider extends ChangeNotifier{
   CommunityRepository _communityRepository;

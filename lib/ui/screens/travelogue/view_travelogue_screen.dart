@@ -1,10 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:truly_pakistan_fyp/models/UserModel.dart';
-import 'package:truly_pakistan_fyp/models/travelogue/travelogue_comment_model.dart';
 import 'package:truly_pakistan_fyp/models/travelogue/travelogue_post_model.dart';
-import 'package:truly_pakistan_fyp/providers/community/community_provider.dart';
 import 'package:truly_pakistan_fyp/providers/travelogue/travelogue_provider.dart';
 import 'package:truly_pakistan_fyp/ui/widgets/comments_bottom_sheet.dart';
 import 'package:truly_pakistan_fyp/utils.dart';
@@ -149,10 +146,10 @@ class _ViewMediaPostScreenState extends State<ViewMediaPostScreen> {
             children: <Widget>[
               ClipRRect(
                 borderRadius: BorderRadius.circular(50),
-                child: (widget.traveloguePost.user.profileUrl!=null
-                    &&widget.traveloguePost.user.profileUrl.isNotEmpty) ?
+                child: (widget.traveloguePost.user.imageUrl!=null
+                    &&widget.traveloguePost.user.imageUrl.isNotEmpty) ?
                 CachedNetworkImage(
-                  imageUrl: widget.traveloguePost.user.profileUrl,
+                  imageUrl: widget.traveloguePost.user.imageUrl,
                   fit: BoxFit.cover,
                   height: 50,
                   width: 50,

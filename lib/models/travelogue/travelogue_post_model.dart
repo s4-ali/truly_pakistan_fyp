@@ -1,7 +1,9 @@
 import 'dart:collection';
 
-import 'package:truly_pakistan_fyp/models/UserModel.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:truly_pakistan_fyp/models/travelogue/travelogue_comment_model.dart';
+
+import '../user_model.dart';
 
 class TraveloguePostModel{
   String description;
@@ -19,7 +21,9 @@ class TraveloguePostModel{
   TraveloguePostModel fromMap(Map<String, dynamic> map) {
     if(map["description"]!=null && map["description"] is String)
       description=map["description"];
-    if(map["description"]!=null && map["description"] is int)
+    if(map["postedAt"]!=null && map["postedAt"] is Timestamp)
+      timeElapsed=(map["postedAt"] as Timestamp).toDate().toString();
+    if(map["reacts"]!=null && map["reacts"] is int)
       reacts=map["reacts"];
     if(map["totalComments"]!=null && map["totalComments"] is int)
       totalComments=map["totalComments"];

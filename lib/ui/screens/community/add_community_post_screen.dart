@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:image_picker_gallery_camera/image_picker_gallery_camera.dart';
 import 'package:provider/provider.dart';
 import 'package:truly_pakistan_fyp/core/media_uploader.dart';
-import 'package:truly_pakistan_fyp/models/UserModel.dart';
 import 'package:truly_pakistan_fyp/models/community/community_post_model.dart';
 import 'package:truly_pakistan_fyp/models/image_upload_task.dart';
+import 'package:truly_pakistan_fyp/models/user_model.dart';
 import 'package:truly_pakistan_fyp/providers/community/community_provider.dart';
 import 'package:truly_pakistan_fyp/utils.dart';
 
@@ -490,7 +490,7 @@ class _AddCommunityPostScreenState extends State<AddCommunityPostScreen> {
     UserModel user=UserModel();
     User firebaseUser=FirebaseAuth.instance.currentUser;
     user.name=firebaseUser.displayName;
-    user.profileUrl=firebaseUser.photoURL;
+    user.imageUrl=firebaseUser.photoURL;
     user.uid=firebaseUser.uid;
     model.postedAt=DateTime.now();
     model.user=user;

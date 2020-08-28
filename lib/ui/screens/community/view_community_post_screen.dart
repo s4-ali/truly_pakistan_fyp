@@ -3,9 +3,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:truly_pakistan_fyp/models/UserModel.dart';
 import 'package:truly_pakistan_fyp/models/community/community_answer_model.dart';
 import 'package:truly_pakistan_fyp/models/community/community_post_model.dart';
+import 'package:truly_pakistan_fyp/models/user_model.dart';
 import 'package:truly_pakistan_fyp/providers/community/community_provider.dart';
 import 'package:truly_pakistan_fyp/static_data.dart';
 import 'package:truly_pakistan_fyp/ui/screens/marketplace/data.dart';
@@ -44,10 +44,10 @@ class _ViewCommunityPostScreenState extends State<ViewCommunityPostScreen> {
             children: <Widget>[
               ClipRRect(
                 borderRadius: BorderRadius.circular(50),
-                child: (widget.communityPostModel.user.profileUrl != null &&
-                        widget.communityPostModel.user.profileUrl.isNotEmpty)
+                child: (widget.communityPostModel.user.imageUrl != null &&
+                        widget.communityPostModel.user.imageUrl.isNotEmpty)
                     ? CachedNetworkImage(
-                        imageUrl: widget.communityPostModel.user.profileUrl,
+                        imageUrl: widget.communityPostModel.user.imageUrl,
                         fit: BoxFit.cover,
                         height: 50,
                         width: 50,
@@ -242,7 +242,7 @@ class _ViewCommunityPostScreenState extends State<ViewCommunityPostScreen> {
                 UserModel user=UserModel()
                   ..name=fUser.displayName
                   ..uid=fUser.uid
-                  ..profileUrl=fUser.photoURL;
+                  ..imageUrl=fUser.photoURL;
                 CommunityAnswerModel answer=CommunityAnswerModel()
                   ..text=_addAnswerController.text
                   ..upVotes=0
