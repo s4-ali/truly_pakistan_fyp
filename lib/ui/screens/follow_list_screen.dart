@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:truly_pakistan_fyp/models/UserModel.dart';
+import 'package:truly_pakistan_fyp/models/user_model.dart';
 import 'package:truly_pakistan_fyp/static_data.dart';
 import 'package:truly_pakistan_fyp/ui/widgets/follow_tile_widget.dart';
 
@@ -17,7 +17,7 @@ class _FollowListScreenState extends State<FollowListScreen> {
   void initState() {
     var user=UserModel();
     user.name="Asfar";
-    user.profileUrl=imageUrl;
+    user.imageUrl=imageUrl;
     _usersList.add(user);
     _usersList.add(user);
     _usersList.add(user);

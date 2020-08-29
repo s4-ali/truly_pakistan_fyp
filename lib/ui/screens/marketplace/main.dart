@@ -71,7 +71,7 @@ class _MarketPlaceState extends State<MarketPlace> {
                           child: Text("Marketplace",style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 18, fontWeight: FontWeight.bold, letterSpacing: 1),),
                         ),
                         SizedBox(width: 20,),
-                        Icon(Icons.more, color: Colors.black, size: 30,)
+                        Icon(Icons.more_vert, color: Colors.black, size: 30,)
                       ],
                     ),
                   ),

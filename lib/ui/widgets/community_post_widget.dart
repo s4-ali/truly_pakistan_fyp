@@ -28,10 +28,10 @@ class CommunityPostWidget extends StatelessWidget {
               children: <Widget>[
                 ClipRRect(
                   borderRadius: BorderRadius.circular(50),
-                  child: (communityPostModel.user.profileUrl!=null
-                      &&communityPostModel.user.profileUrl.isNotEmpty) ?
+                  child: (communityPostModel.user.imageUrl!=null
+                      &&communityPostModel.user.imageUrl.isNotEmpty) ?
                   CachedNetworkImage(
-                    imageUrl: communityPostModel.user.profileUrl,
+                    imageUrl: communityPostModel.user.imageUrl,
                     fit: BoxFit.cover,
                     height: 50,
                     width: 50,

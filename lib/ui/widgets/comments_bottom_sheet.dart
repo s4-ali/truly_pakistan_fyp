@@ -2,11 +2,10 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:truly_pakistan_fyp/models/UserModel.dart';
 import 'package:truly_pakistan_fyp/models/travelogue/travelogue_comment_model.dart';
 import 'package:truly_pakistan_fyp/models/travelogue/travelogue_post_model.dart';
+import 'package:truly_pakistan_fyp/models/user_model.dart';
 import 'package:truly_pakistan_fyp/providers/travelogue/travelogue_provider.dart';
-import 'package:truly_pakistan_fyp/utils.dart';
 
 class CommentsBottomSheet extends StatefulWidget {
   final TraveloguePostModel traveloguePostModel;
@@ -49,7 +48,7 @@ class _CommentsBottomSheetState extends State<CommentsBottomSheet> {
                   UserModel user=UserModel()
                     ..name=fUser.displayName
                     ..uid=fUser.uid
-                    ..profileUrl=fUser.photoURL;
+                    ..imageUrl=fUser.photoURL;
                   TravelogueCommentModel comment=TravelogueCommentModel()
                     ..text=_addCommentController.text
                     ..postedAt=DateTime.now()
@@ -94,10 +93,10 @@ class _CommentsBottomSheetState extends State<CommentsBottomSheet> {
         children: <Widget>[
           ClipRRect(
             borderRadius: BorderRadius.circular(50),
-            child: (travelogueCommentModel.user.profileUrl!=null
-                &&travelogueCommentModel.user.profileUrl.isNotEmpty) ?
+            child: (travelogueCommentModel.user.imageUrl!=null
+                &&travelogueCommentModel.user.imageUrl.isNotEmpty) ?
             CachedNetworkImage(
-              imageUrl: travelogueCommentModel.user.profileUrl,
+              imageUrl: travelogueCommentModel.user.imageUrl,
               fit: BoxFit.cover,
               height: 50,
               width: 50,

@@ -1,26 +1,21 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:truly_pakistan_fyp/models/user_model.dart';
-import 'package:truly_pakistan_fyp/ui/screens/settings_screen.dart';
 import 'package:truly_pakistan_fyp/ui/widgets/back_arrow_widget.dart';
 
-class ProfileScreen extends StatefulWidget {
+import '../settings_screen.dart';
+
+class EditProfileScreen extends StatefulWidget {
   final UserModel userModel;
 
-  const ProfileScreen({Key key, this.userModel}) : super(key: key);
+  EditProfileScreen(this.userModel,{Key key}) : super(key: key);
+
   @override
-  _ProfileScreenState createState() => _ProfileScreenState();
+  _EditProfileScreenState createState() => _EditProfileScreenState();
 }
 
-class _ProfileScreenState extends State<ProfileScreen> {
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
+class _EditProfileScreenState extends State<EditProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -227,6 +222,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ],
       ),
     );
-  }
 
+  }
 }

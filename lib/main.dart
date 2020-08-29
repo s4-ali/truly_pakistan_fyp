@@ -1,12 +1,14 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:truly_pakistan_fyp/models/user_model.dart';
 import 'package:truly_pakistan_fyp/providers/community/community_provider.dart';
 import 'package:truly_pakistan_fyp/providers/theme_provider.dart';
 import 'package:truly_pakistan_fyp/providers/travelogue/travelogue_provider.dart';
 import 'package:truly_pakistan_fyp/ui/screens/community/add_community_post_screen.dart';
 import 'package:truly_pakistan_fyp/ui/screens/community/community_screen.dart';
 import 'package:truly_pakistan_fyp/ui/screens/home_screen.dart';
+import 'package:truly_pakistan_fyp/ui/screens/profile_screen.dart';
 import 'package:truly_pakistan_fyp/ui/screens/settings_screen.dart';
 import 'package:truly_pakistan_fyp/ui/screens/splash_screen.dart';
 
@@ -47,7 +49,7 @@ class MyApp extends StatelessWidget {
             title: 'Flutter Demo',
             theme: Provider.of<ThemeProvider>(context).currentThemeData,
             debugShowCheckedModeBanner: false,
-            home: SplashScreen(),
+            home: ProfileScreen(userModel: UserModel()..imageUrl="some url"..isCurrentUser=true..bio="Some bio",),
           );
         },
       ),

@@ -35,10 +35,10 @@ class _TraveloguePostWidgetState extends State<TraveloguePostWidget> {
             children: <Widget>[
               ClipRRect(
                 borderRadius: BorderRadius.circular(50),
-                child: (widget.traveloguePost.user.profileUrl!=null
-                    &&widget.traveloguePost.user.profileUrl.isNotEmpty) ?
+                child: (widget.traveloguePost.user.imageUrl!=null
+                    &&widget.traveloguePost.user.imageUrl.isNotEmpty) ?
                 CachedNetworkImage(
-                  imageUrl: widget.traveloguePost.user.profileUrl,
+                  imageUrl: widget.traveloguePost.user.imageUrl,
                   fit: BoxFit.cover,
                   height: 50,
                   width: 50,

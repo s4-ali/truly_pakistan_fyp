@@ -10,6 +10,7 @@ class MediaUploader{
 
   Future<ImageUploadTask> uploadSingleImage(ImageUploadTask imageUploadTask)async{
     try {
+      imageUploadTask.path=imageUploadTask.path+Uuid().v1().toString()+".jpg";
       var result=await FirebaseStorage.instance.ref().child(imageUploadTask.path).putFile(imageUploadTask.file).onComplete;
       imageUploadTask.url=await result.ref.getDownloadURL();
       return imageUploadTask;
@@ -25,7 +26,7 @@ class MediaUploader{
   Stream<ImageUploadTask> uploadMultipleImages(List<ImageUploadTask> imageUploadTasks){
     Future.forEach(imageUploadTasks, (ImageUploadTask imageUploadTask) async {
       try {
-        imageUploadTask.path=imageUploadTask.path+Uuid().v1()+".jpg";
+        imageUploadTask.path=imageUploadTask.path+Uuid().v1().toString()+".jpg";
         var result=await FirebaseStorage.instance.ref().child(imageUploadTask.path).putFile(imageUploadTask.file).onComplete;
         imageUploadTask.url=await result.ref.getDownloadURL();
         controller.add(imageUploadTask);

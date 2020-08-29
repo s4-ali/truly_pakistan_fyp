@@ -71,7 +71,7 @@ class _HomeScreenState extends State<HomeScreen> {
       CommunityScreen(),
       MarketplaceScreen(),
       NotificationsScreen(),
-      ProfileScreen(isCurrentUser: true,),
+      ProfileScreen(),
     ];
   }
 

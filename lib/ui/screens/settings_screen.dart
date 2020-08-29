@@ -20,7 +20,7 @@ class SettingsScreen extends StatelessWidget {
           IconButton(
             onPressed: ()async{
               await FirebaseAuth.instance.signOut();
-              pushNewScreen(context, screen: SplashScreen());
+              pushNewScreen(context, screen: SplashScreen(),withNavBar: false);
             },icon: Icon(Icons.exit_to_app,color: Theme.of(context).primaryColor,),),
         ],
       ),

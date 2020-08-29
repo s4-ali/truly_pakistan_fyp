@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
-import 'package:truly_pakistan_fyp/models/UserModel.dart';
+import 'package:truly_pakistan_fyp/models/user_model.dart';
 import 'package:truly_pakistan_fyp/static_data.dart';
 import 'package:truly_pakistan_fyp/ui/screens/profile_screen.dart';
 
@@ -16,7 +16,7 @@ class FollowTileWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: (){
-        pushNewScreen(context,screen: ProfileScreen(userModel: user,isCurrentUser: false,));
+        pushNewScreen(context,screen: ProfileScreen(userModel: user,));
       },
       child: Container(
         margin: EdgeInsets.only(bottom: 8,left: 16,right: 16),
@@ -30,7 +30,7 @@ class FollowTileWidget extends StatelessWidget {
             ClipRRect(
               borderRadius: BorderRadius.circular(40),
               child: CachedNetworkImage(
-                imageUrl: user.profileUrl,
+                imageUrl: user.imageUrl,
                 height: 40,
                 width: 40,
                 fit: BoxFit.fill,
