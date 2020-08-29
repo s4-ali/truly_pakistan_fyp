@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/services.dart';
 
 class CommunityRepository {
@@ -15,6 +16,8 @@ class CommunityRepository {
 
   Future<String> addCommunityPost(Map<String, dynamic> data) async {
     try {
+      data["postedAt"]=FieldValue.serverTimestamp();
+
       await FirebaseFirestore.instance
           .collection("Community")
           .doc()
@@ -27,6 +30,8 @@ class CommunityRepository {
 
   Future<String> addAnswerTo(String postId,Map<String,dynamic> data)async{
     try {
+      data["postedAt"]=FieldValue.serverTimestamp();
+
       await FirebaseFirestore.instance
           .collection("Community")
           .doc(postId)

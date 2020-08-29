@@ -15,6 +15,8 @@ class TravelogueRepository {
 
   Future<String> addTraveloguePost(Map<String, dynamic> data) async {
     try {
+      data["postedAt"]=FieldValue.serverTimestamp();
+
       await FirebaseFirestore.instance
           .collection("Travelogue")
           .doc()
@@ -27,6 +29,8 @@ class TravelogueRepository {
 
   Future<String> addAnswerTo(String postId,Map<String,dynamic> data)async{
     try {
+      data["postedAt"]=FieldValue.serverTimestamp();
+
       await FirebaseFirestore.instance
           .collection("Travelogue")
           .doc(postId)
