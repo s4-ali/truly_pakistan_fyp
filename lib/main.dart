@@ -5,9 +5,12 @@ import 'package:truly_pakistan_fyp/models/user_model.dart';
 import 'package:truly_pakistan_fyp/providers/community/community_provider.dart';
 import 'package:truly_pakistan_fyp/providers/theme_provider.dart';
 import 'package:truly_pakistan_fyp/providers/travelogue/travelogue_provider.dart';
+import 'package:truly_pakistan_fyp/providers/user/user_provider.dart';
+import 'package:truly_pakistan_fyp/static_data.dart';
 import 'package:truly_pakistan_fyp/ui/screens/community/add_community_post_screen.dart';
 import 'package:truly_pakistan_fyp/ui/screens/community/community_screen.dart';
 import 'package:truly_pakistan_fyp/ui/screens/home_screen.dart';
+import 'package:truly_pakistan_fyp/ui/screens/profile/edit_profile_screen.dart';
 import 'package:truly_pakistan_fyp/ui/screens/profile_screen.dart';
 import 'package:truly_pakistan_fyp/ui/screens/settings_screen.dart';
 import 'package:truly_pakistan_fyp/ui/screens/splash_screen.dart';
@@ -25,6 +28,9 @@ Future<void> main() async {
         ChangeNotifierProvider<TravelogueProvider>(
           create: (_) => TravelogueProvider(),
         ),
+        ChangeNotifierProvider<UserProvider>(
+          create: (_) => UserProvider(),
+        )
       ],
       child: MyApp(),
     )
@@ -49,7 +55,7 @@ class MyApp extends StatelessWidget {
             title: 'Flutter Demo',
             theme: Provider.of<ThemeProvider>(context).currentThemeData,
             debugShowCheckedModeBanner: false,
-            home: ProfileScreen(userModel: UserModel()..imageUrl="some url"..isCurrentUser=true..bio="Some bio",),
+            home: SplashScreen(),
           );
         },
       ),

@@ -1,6 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
+import 'package:provider/provider.dart';
+import 'package:truly_pakistan_fyp/providers/user/user_provider.dart';
+import 'package:truly_pakistan_fyp/ui/screens/profile/edit_profile_screen.dart';
 import 'package:truly_pakistan_fyp/ui/screens/splash_screen.dart';
 
 class SettingsScreen extends StatelessWidget {
@@ -20,7 +23,7 @@ class SettingsScreen extends StatelessWidget {
           IconButton(
             onPressed: ()async{
               await FirebaseAuth.instance.signOut();
-              pushNewScreen(context, screen: SplashScreen(),withNavBar: false);
+//              pushNewScreen(context, screen: SplashScreen(),withNavBar: false);
             },icon: Icon(Icons.exit_to_app,color: Theme.of(context).primaryColor,),),
         ],
       ),
@@ -31,14 +34,19 @@ class SettingsScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical:16.0,horizontal: 24),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Text("Edit Profile",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 16),),
-                      Icon(Icons.arrow_forward_ios,size: 20,),
-                    ],
+                GestureDetector(
+                  onTap: (){
+                    pushNewScreen(context,screen: EditProfileScreen(),withNavBar: false);
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical:16.0,horizontal: 24),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Text("Edit Profile",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 16),),
+                        Icon(Icons.arrow_forward_ios,size: 20,),
+                      ],
+                    ),
                   ),
                 ),
                 Container(

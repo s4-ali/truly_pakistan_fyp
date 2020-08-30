@@ -1,8 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:truly_pakistan_fyp/models/user_model.dart';
+import 'package:truly_pakistan_fyp/ui/screens/profile/edit_profile_screen.dart';
 import 'package:truly_pakistan_fyp/ui/screens/settings_screen.dart';
 import 'package:truly_pakistan_fyp/ui/widgets/back_arrow_widget.dart';
 
@@ -126,69 +128,97 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           color: Color(0x22000000),
                         ),
                         child: InkWell(
-                          onTap: (){
-                            pushNewScreen(context, screen: SettingsScreen());
+                          onTap: ()async{
+                            await FirebaseAuth.instance.signOut();
                           },
                           child: Padding(
                             padding: const EdgeInsets.symmetric(vertical: 8.0,horizontal: 16.0),
-                            child: Icon(Icons.settings,color: Colors.white,),
+                            child: Icon(Icons.exit_to_app,color: Colors.white,size: 25,),
                           ),
                         ),
                       ),
                     ),
                   ),
                 ),
+                if(widget.userModel.isCurrentUser)
+                Align(
+                  alignment: Alignment.topRight,
+                  child: GestureDetector(
+                    onTap: (){
+                      Navigator.pop(context);
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: (32.0+25.0+24.0),right: 8),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(4),
+                          color: Color(0x22000000),
+                        ),
+                        child: InkWell(
+                          onTap: (){
+                            pushNewScreen(context,screen: EditProfileScreen(),withNavBar: false);
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 8.0,horizontal: 16.0),
+                            child: Icon(Icons.edit,color: Colors.white,size: 25,),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+
               ],
             ),
           ),
           Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.only(bottom:16.0),
-                child: Center(
-                  child: Text(widget.userModel.name??"NA",style: Theme.of(context).textTheme.headline5
-                      .copyWith(color: Theme.of(context).primaryColor,fontWeight: FontWeight.bold),
-                  ),
+              Center(
+                child: Text(widget.userModel.name??"NA",style: Theme.of(context).textTheme.headline5
+                    .copyWith(color: Theme.of(context).primaryColor,fontWeight: FontWeight.bold),
                 ),
               ),
-              if(widget.userModel.isCurrentUser) Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                mainAxisSize: MainAxisSize.max,
-                children: <Widget>[
-                  Flexible(
-                    flex: 1,
-                    child: Container(
-                      decoration: BoxDecoration(
-                          color: Theme.of(context).primaryColor,
-                          boxShadow: [BoxShadow(color: Colors.black12,
-                              blurRadius: 3,offset: Offset(0,3))],
-                          borderRadius: BorderRadius.circular(8)
+              if(!widget.userModel.isCurrentUser) Padding(
+                padding: const EdgeInsets.only(top:16.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.max,
+                  children: <Widget>[
+                    Flexible(
+                      flex: 1,
+                      child: Container(
+                        decoration: BoxDecoration(
+                            color: Theme.of(context).primaryColor,
+                            boxShadow: [BoxShadow(color: Colors.black12,
+                                blurRadius: 3,offset: Offset(0,3))],
+                            borderRadius: BorderRadius.circular(8)
+                        ),
+                        padding: EdgeInsets.symmetric(vertical: 8),
+                        margin: EdgeInsets.symmetric(horizontal: 16),
+                        width: double.infinity,
+                        child: Center(child: Text("Follow",style: TextStyle(color: Theme.of(context).canvasColor,fontWeight: FontWeight.bold),),),
                       ),
-                      padding: EdgeInsets.symmetric(vertical: 8),
-                      margin: EdgeInsets.symmetric(horizontal: 16),
-                      width: double.infinity,
-                      child: Center(child: Text("Follow",style: TextStyle(color: Theme.of(context).canvasColor,fontWeight: FontWeight.bold),),),
                     ),
-                  ),
-                  Flexible(
-                    flex: 1,
-                    child: Container(
-                      decoration: BoxDecoration(
-                          color: Theme.of(context).cardColor,
-                          borderRadius: BorderRadius.circular(8)
+                    Flexible(
+                      flex: 1,
+                      child: Container(
+                        decoration: BoxDecoration(
+                            color: Theme.of(context).cardColor,
+                            borderRadius: BorderRadius.circular(8)
+                        ),
+                        padding: EdgeInsets.symmetric(vertical: 8),
+                        margin: EdgeInsets.symmetric(horizontal: 16),
+                        width: double.infinity,
+                        child: Center(child: Text("Message",style: TextStyle(fontWeight: FontWeight.bold),),),
                       ),
-                      padding: EdgeInsets.symmetric(vertical: 8),
-                      margin: EdgeInsets.symmetric(horizontal: 16),
-                      width: double.infinity,
-                      child: Center(child: Text("Message",style: TextStyle(fontWeight: FontWeight.bold),),),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
               Padding(
                 padding: const EdgeInsets.all(16.0),
-                child: Text(widget.userModel.bio,textAlign: TextAlign.center,),
+                child: Text(widget.userModel.bio??"",textAlign: TextAlign.center,),
               ),
               Container(
                 decoration: BoxDecoration(

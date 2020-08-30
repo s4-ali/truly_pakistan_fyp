@@ -3,7 +3,9 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:provider/provider.dart';
 import 'package:truly_pakistan_fyp/core/authentication.dart';
+import 'package:truly_pakistan_fyp/providers/user/user_provider.dart';
 import 'package:truly_pakistan_fyp/ui/screens/auth/flutter_login.dart';
 import 'package:truly_pakistan_fyp/ui/screens/home_screen.dart';
 
@@ -14,20 +16,63 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
 
+  bool _showSplashScreen=true;
+
   startTime() async {
     var _duration = new Duration(seconds: 4);
     return new Timer(_duration, navigationPage);
   }
 
   void navigationPage() async{
+    setState(() {
+      _showSplashScreen=false;
+    });
+//    final User user = authService.currentUser();
+//    if(user==null){
+//
+//    }else{
+//      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>HomeScreen()));
+//    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    startTime();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return new Scaffold(
+      backgroundColor: Theme.of(context).primaryColor,
+      body: (_showSplashScreen)?
+      _splashScreenWidget():StreamBuilder(
+        stream: FirebaseAuth.instance.authStateChanges(),
+        builder: (_,snap){
+          User user=snap.data;
+          if(snap.connectionState==ConnectionState.waiting){
+            return _splashScreenWidget();
+          }else{
+            if(user==null){
+              Provider.of<UserProvider>(context).clearUser();
+              return _authScreen();
+            }else{
+              startHomeScreen(user.uid);
+              return _splashScreenWidget();
+            }
+          }
+        },
+      ),
+    );
+  }
+
+  Widget _authScreen(){
     Authentication authService=Authentication();
-    final User user = authService.currentUser();
-    if(user==null){
-      Navigator.pushReplacement(context, MaterialPageRoute(builder:(context)=>FlutterLogin(
+    return FlutterLogin(
         onLogin: (s) async {
           try {
             await authService.signInWithEmailAndPassword(s.name, s.password);
-            Navigator.push(context, MaterialPageRoute(builder: (context)=>HomeScreen()));
+            startHomeScreen(authService.currentUser().uid);
           } on Exception catch(e){
             return e.toString();
           }
@@ -36,7 +81,7 @@ class _SplashScreenState extends State<SplashScreen> {
         onSignup: (s)async{
           try{
             await authService.createUserWithEmailAndPassword(s.name, s.password, "Asfar");
-            Navigator.push(context, MaterialPageRoute(builder: (context)=>HomeScreen()));
+            startHomeScreen(authService.currentUser().uid);
           }on Exception catch(e){
             return e.toString();
           }
@@ -51,40 +96,36 @@ class _SplashScreenState extends State<SplashScreen> {
           }
           return null;
         },
-      ),));
-    }else{
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>HomeScreen()));
-    }
+      );
   }
 
-  @override
-  void initState() {
-    super.initState();
-    startTime();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return new Scaffold(
-      backgroundColor: Theme.of(context).primaryColor,
-      body: new Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            Text("Truly Pakistan", style: TextStyle(fontSize: 24,color: Colors.white),),
+  Widget _splashScreenWidget(){
+    return Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          Text("Truly Pakistan", style: TextStyle(fontSize: 24,color: Colors.white),),
 //            new Image.asset(
 //              "assets/icons&splashs/launcher.png",
 //              width: 100 ,
 //              height: 100,
 //              fit: BoxFit.cover,
 //            ),
-            Padding(
-              padding: EdgeInsets.all(16),
-              child: CircularProgressIndicator(),
-            )
-          ],
-        ),
+          Padding(
+            padding: EdgeInsets.all(16),
+            child: CircularProgressIndicator(),
+          )
+        ],
       ),
     );
+  }
+
+  void startHomeScreen(String uid) async{
+    var userProvider=Provider.of<UserProvider>(context);
+    await userProvider.changeUserTo(uid);
+    Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context)
+        =>HomeScreen(userProvider.getCurrentUser())));
   }
 }

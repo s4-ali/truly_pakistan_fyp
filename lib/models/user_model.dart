@@ -20,7 +20,7 @@ class UserModel{
   int totalFollowing;
   String twitterURL;
 
-  bool isCurrentUser;
+  bool isCurrentUser=false;
 
 
   HashMap<String,dynamic> toMap() {
@@ -33,13 +33,13 @@ class UserModel{
     map["facebookURL"]=facebookURL;
     map["gender"]=gender;
     map["phoneNumber"]=phoneNumber;
-    map["imageUrl"]=imageUrl;
-    map["imageUrlCover"]=imageUrlCover;
+    map["profilePicture"]=imageUrl;
+    map["coverPicture"]=imageUrlCover;
     map["name"]=name;
     map["state"]=state;
     map["status"]=status;
     map["totalFollowers"]=totalFollowers;
-    map["totalFollowing"]=totalFollowers;
+    map["totalFollowing"]=totalFollowing;
     map["twitterURL"]=twitterURL;
     return map;
   }
@@ -53,14 +53,16 @@ class UserModel{
     facebookURL=map["facebookURL"];
     gender=map["gender"];
     phoneNumber=map["phoneNumber"];
-    imageUrl=map["imageUrl"];
-    imageUrlCover=map["imageUrlCover"];
+    imageUrl=map["profilePicture"];
+    imageUrlCover=map["coverPicture"];
     name=map["name"];
     state=map["state"];
     status=map["status"];
-    totalFollowers=map["totalFollowers"];
+    totalFollowing=map["totalFollowing"];
     totalFollowers=map["totalFollowers"];
     twitterURL=map["twitterURL"];
     return this;
   }
+
+  void clear() {}
 }

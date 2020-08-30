@@ -25,7 +25,7 @@ class Authentication implements BaseAuth {
     final User user = (await _firebaseAuth.createUserWithEmailAndPassword(email: email, password: password)).user;
     await user.updateProfile(displayName: name);
     await user.sendEmailVerification();
-    await FirebaseFirestore.instance.collection("users").document(user.uid).update({
+    await FirebaseFirestore.instance.collection("users").doc(user.uid).update({
       "status":1,
       "displayName":name,
       "email":email,
