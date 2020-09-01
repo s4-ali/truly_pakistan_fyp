@@ -61,4 +61,16 @@ class CommunityRepository {
               (value) => value != null ? value.docs : null
       );
   }
+
+
+  Future<List<DocumentSnapshot>> getCommunityPostsBy(String uid) async{
+    return await FirebaseFirestore.instance
+        .collection("Community")
+        .where("user.uid",isEqualTo: uid)
+        .orderBy("postedAt",descending: true)
+        .get()
+        .then(
+            (value) => value != null ? value.docs : null
+    );
+  }
 }

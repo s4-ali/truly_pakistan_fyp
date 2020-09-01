@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:truly_pakistan_fyp/models/community/community_answer_model.dart';
 import 'package:truly_pakistan_fyp/models/community/community_post_model.dart';
+import 'package:truly_pakistan_fyp/models/user_model.dart';
 import 'package:truly_pakistan_fyp/repository/community/community_repository.dart';
 
 class CommunityProvider extends ChangeNotifier{
@@ -82,5 +83,15 @@ class CommunityProvider extends ChangeNotifier{
           'name':fUser.displayName,
           'vote':-1,
         });
+  }
+
+
+  Future<List<CommunityPostModel>> getCommunityPostsByUser(UserModel user) async{
+    var docs=await _communityRepository.getCommunityPostsBy(user.uid);
+    List<CommunityPostModel> communityPosts=List();
+    for(DocumentSnapshot dc in docs){
+      communityPosts.add(CommunityPostModel().fromMap(dc.data()));
+    }
+    return communityPosts;
   }
 }

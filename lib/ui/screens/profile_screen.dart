@@ -9,6 +9,7 @@ import 'package:truly_pakistan_fyp/models/user_model.dart';
 import 'package:truly_pakistan_fyp/providers/chat/chat_provider.dart';
 import 'package:truly_pakistan_fyp/providers/user/user_provider.dart';
 import 'package:truly_pakistan_fyp/ui/screens/chat/chat_screen.dart';
+import 'package:truly_pakistan_fyp/ui/screens/community/users_question_screen.dart';
 import 'package:truly_pakistan_fyp/ui/screens/profile/edit_profile_screen.dart';
 import 'package:truly_pakistan_fyp/ui/screens/settings_screen.dart';
 import 'package:truly_pakistan_fyp/ui/screens/travelogue/users_travelogue_screen.dart';
@@ -389,27 +390,32 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                 ),
               ),
-              Container(
-                decoration: BoxDecoration(
-                    color: Theme.of(context).cardColor,
-                    borderRadius: BorderRadius.circular(16),
-                    boxShadow: [
-                      BoxShadow(
-                          color: Colors.black26,
-                          offset: Offset(1, 3),
-                          blurRadius: 3)
-                    ]),
-                margin: EdgeInsets.only(top: 16, left: 16, right: 16),
-                padding: EdgeInsets.all(16.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Text(
-                      "Questions",
-                      style: TextStyle(fontSize: 17),
-                    ),
-                    Icon(Icons.arrow_forward_ios),
-                  ],
+              GestureDetector(
+                onTap: (){
+                  pushNewScreen(context, screen: UsersQuestionScreen(user: widget.user,),withNavBar: false);
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                      color: Theme.of(context).cardColor,
+                      borderRadius: BorderRadius.circular(16),
+                      boxShadow: [
+                        BoxShadow(
+                            color: Colors.black26,
+                            offset: Offset(1, 3),
+                            blurRadius: 3)
+                      ]),
+                  margin: EdgeInsets.only(top: 16, left: 16, right: 16),
+                  padding: EdgeInsets.all(16.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Text(
+                        "Questions",
+                        style: TextStyle(fontSize: 17),
+                      ),
+                      Icon(Icons.arrow_forward_ios),
+                    ],
+                  ),
                 ),
               ),
             ],
