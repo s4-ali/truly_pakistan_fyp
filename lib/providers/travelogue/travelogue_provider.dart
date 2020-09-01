@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:truly_pakistan_fyp/models/travelogue/travelogue_comment_model.dart';
 import 'package:truly_pakistan_fyp/models/travelogue/travelogue_post_model.dart';
+import 'package:truly_pakistan_fyp/models/user_model.dart';
 import 'package:truly_pakistan_fyp/repository/travelogue/travelogue_repository.dart';
 
 class TravelogueProvider extends ChangeNotifier{
@@ -75,6 +76,15 @@ class TravelogueProvider extends ChangeNotifier{
           'name':fUser.displayName,
           'reaction':reaction,
         });
+  }
+
+  Future<List<TraveloguePostModel>> getTraveloguePostsByUser(UserModel user) async{
+    var docs=await _travelogueRepository.getTraveloguePostsBy(user.uid);
+    List<TraveloguePostModel> travelogues=List();
+    for(DocumentSnapshot dc in docs){
+      travelogues.add(TraveloguePostModel().fromMap(dc.data()));
+    }
+    return travelogues;
   }
 
 }

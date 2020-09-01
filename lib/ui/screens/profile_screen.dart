@@ -11,6 +11,7 @@ import 'package:truly_pakistan_fyp/providers/user/user_provider.dart';
 import 'package:truly_pakistan_fyp/ui/screens/chat/chat_screen.dart';
 import 'package:truly_pakistan_fyp/ui/screens/profile/edit_profile_screen.dart';
 import 'package:truly_pakistan_fyp/ui/screens/settings_screen.dart';
+import 'package:truly_pakistan_fyp/ui/screens/travelogue/users_travelogue_screen.dart';
 import 'package:truly_pakistan_fyp/ui/widgets/back_arrow_widget.dart';
 import 'package:truly_pakistan_fyp/utils.dart';
 
@@ -360,27 +361,32 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   textAlign: TextAlign.center,
                 ),
               ),
-              Container(
-                decoration: BoxDecoration(
-                    color: Theme.of(context).cardColor,
-                    borderRadius: BorderRadius.circular(16),
-                    boxShadow: [
-                      BoxShadow(
-                          color: Colors.black26,
-                          offset: Offset(1, 3),
-                          blurRadius: 3)
-                    ]),
-                margin: EdgeInsets.symmetric(horizontal: 16),
-                padding: EdgeInsets.all(16.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Text(
-                      "Travelogues",
-                      style: TextStyle(fontSize: 17),
-                    ),
-                    Icon(Icons.arrow_forward_ios),
-                  ],
+              GestureDetector(
+                onTap: (){
+                  pushNewScreen(context, screen: UsersTravelogueScreen(user: widget.user,),withNavBar: false);
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                      color: Theme.of(context).cardColor,
+                      borderRadius: BorderRadius.circular(16),
+                      boxShadow: [
+                        BoxShadow(
+                            color: Colors.black26,
+                            offset: Offset(1, 3),
+                            blurRadius: 3)
+                      ]),
+                  margin: EdgeInsets.symmetric(horizontal: 16),
+                  padding: EdgeInsets.all(16.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Text(
+                        "Travelogues",
+                        style: TextStyle(fontSize: 17),
+                      ),
+                      Icon(Icons.arrow_forward_ios),
+                    ],
+                  ),
                 ),
               ),
               Container(

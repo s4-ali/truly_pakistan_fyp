@@ -61,4 +61,15 @@ class TravelogueRepository {
     );
   }
 
+  Future<List<DocumentSnapshot>> getTraveloguePostsBy(String uid) async{
+    return await FirebaseFirestore.instance
+        .collection("Travelogue")
+        .where("user.uid",isEqualTo: uid)
+        .orderBy("postedAt",descending: true)
+        .get()
+        .then(
+            (value) => value != null ? value.docs : null
+    );
+  }
+
 }
