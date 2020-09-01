@@ -83,5 +83,4 @@ class CommunityProvider extends ChangeNotifier{
           'vote':-1,
         });
   }
-
 }

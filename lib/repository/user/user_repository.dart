@@ -22,4 +22,38 @@ class UserRepository{
             (value) => value != null ? value.data() : null
     );
   }
+
+  Future<DocumentSnapshot> getFollowingDocument(String uid, String otherUid) async {
+    return await FirebaseFirestore.instance
+        .collection("users")
+        .doc(uid)
+        .collection("Following")
+        .doc(otherUid).get();
+  }
+
+  Future<String> removeFromFollowing(String uid, String otherUid) async{
+    try {
+      await FirebaseFirestore.instance.collection("users")
+          .doc(uid)
+          .collection("Following")
+          .doc(otherUid).delete();
+      return null;
+    }on PlatformException catch(ex){
+      return ex.message;
+    }
+  }
+
+  Future<String> addFollowing(String uid, String otherUid, Map<String, String> data) async{
+    try{
+      await FirebaseFirestore.instance.collection("users")
+          .doc(uid)
+          .collection("Following")
+          .doc(otherUid)
+          .set(data);
+      return null;
+    }on PlatformException catch(ex){
+      return ex.message;
+    }
+
+  }
 }

@@ -2,13 +2,16 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:provider/provider.dart';
 import 'package:truly_pakistan_fyp/models/community/community_answer_model.dart';
 import 'package:truly_pakistan_fyp/models/community/community_post_model.dart';
 import 'package:truly_pakistan_fyp/models/user_model.dart';
 import 'package:truly_pakistan_fyp/providers/community/community_provider.dart';
+import 'package:truly_pakistan_fyp/providers/user/user_provider.dart';
 import 'package:truly_pakistan_fyp/static_data.dart';
 import 'package:truly_pakistan_fyp/ui/screens/marketplace/data.dart';
+import 'package:truly_pakistan_fyp/ui/screens/profile_screen.dart';
 
 class ViewCommunityPostScreen extends StatefulWidget {
   final CommunityPostModel communityPostModel;
@@ -25,7 +28,7 @@ class _ViewCommunityPostScreenState extends State<ViewCommunityPostScreen> {
   @override
   void initState() {
     super.initState();
-    _addAnswerController=TextEditingController();
+    _addAnswerController = TextEditingController();
     _loadAnswers();
     _loadUserVote();
   }
@@ -62,9 +65,21 @@ class _ViewCommunityPostScreenState extends State<ViewCommunityPostScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Text(
-                      widget.communityPostModel.user.name ?? "No-Name",
-                      style: Theme.of(context).textTheme.headline6,
+                    GestureDetector(
+                      onTap: () async {
+                        UserModel user = await Provider.of<UserProvider>(
+                                context,
+                                listen: false)
+                            .getUserDetails(widget.communityPostModel.user);
+                        pushNewScreen(context,
+                            screen: ProfileScreen(
+                              user: user,
+                            ));
+                      },
+                      child: Text(
+                        widget.communityPostModel.user.name ?? "",
+                        style: Theme.of(context).textTheme.headline6,
+                      ),
                     ),
                     Text(
                       widget.communityPostModel.timeElapsed,
@@ -196,29 +211,69 @@ class _ViewCommunityPostScreenState extends State<ViewCommunityPostScreen> {
                       children: <Widget>[
                         IconButton(
                           onPressed: () {
-                            Provider.of<CommunityProvider>(context,listen: false)
-                                .addUpVoteTo(widget.communityPostModel);},
-                          icon: Icon(Icons.arrow_upward),
+                            setState(() {
+                              if (widget.communityPostModel.currentVote == 0) {
+                                widget.communityPostModel.currentVote = 1;
+                                widget.communityPostModel.upVotes++;
+                              } else if (widget.communityPostModel.currentVote <
+                                  0) {
+                                widget.communityPostModel.upVotes++;
+                                widget.communityPostModel.downVotes--;
+                                widget.communityPostModel.currentVote = 1;
+                              } else {
+                                widget.communityPostModel.upVotes--;
+                                widget.communityPostModel.currentVote = 0;
+                              }
+                            });
+                            Provider.of<CommunityProvider>(context,
+                                    listen: false)
+                                .addUpVoteTo(widget.communityPostModel);
+                          },
+                          icon: Icon(
+                            Icons.arrow_upward,
+                            color: widget.communityPostModel.currentVote > 0
+                                ? Theme.of(context).primaryColor
+                                : Theme.of(context).iconTheme.color,
+                          ),
                           iconSize: 30,
                           color: theme.primaryColor,
                         ),
                         Text(
-                          "${widget.communityPostModel.totalVotes}",
-                          style: TextStyle(fontSize: 16, color: theme.primaryColor),
+                          "${widget.communityPostModel.upVotes - widget.communityPostModel.downVotes}",
+                          style: TextStyle(
+                              fontSize: 16, color: theme.primaryColor),
                         ),
                         IconButton(
                           onPressed: () {
-                            Provider.of<CommunityProvider>(context,listen: false)
+                            setState(() {
+                              if (widget.communityPostModel.currentVote == 0) {
+                                widget.communityPostModel.currentVote = -1;
+                                widget.communityPostModel.downVotes++;
+                              } else if (widget.communityPostModel.currentVote >
+                                  0) {
+                                widget.communityPostModel.currentVote = -1;
+                                widget.communityPostModel.downVotes++;
+                                widget.communityPostModel.upVotes--;
+                              } else {
+                                widget.communityPostModel.downVotes--;
+                                widget.communityPostModel.currentVote = 0;
+                              }
+                            });
+                            Provider.of<CommunityProvider>(context,
+                                    listen: false)
                                 .addDownVoteTo(widget.communityPostModel);
                           },
-                          icon: Icon(Icons.arrow_downward),
+                          icon: Icon(Icons.arrow_downward,
+                              color: widget.communityPostModel.currentVote < 0
+                                  ? Theme.of(context).primaryColor
+                                  : Theme.of(context).iconTheme.color),
                           iconSize: 30,
                           color: theme.primaryColor,
                         ),
                       ],
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(right:16.0),
+                      padding: const EdgeInsets.only(right: 16.0),
                       child: Text("Share"),
                     )
                   ],
@@ -236,21 +291,21 @@ class _ViewCommunityPostScreenState extends State<ViewCommunityPostScreen> {
             ),
             child: TextField(
               controller: _addAnswerController,
-              onEditingComplete: ()async{
-                if(_addAnswerController.text.isEmpty)return;
-                var fUser=FirebaseAuth.instance.currentUser;
-                UserModel user=UserModel()
-                  ..name=fUser.displayName
-                  ..uid=fUser.uid
-                  ..imageUrl=fUser.photoURL;
-                CommunityAnswerModel answer=CommunityAnswerModel()
-                  ..text=_addAnswerController.text
-                  ..upVotes=0
-                  ..downVotes=0
-                  ..votes="0"
-                  ..postedAt=DateTime.now()
-                  ..user=user;
-                await Provider.of<CommunityProvider>(context,listen: false)
+              onEditingComplete: () async {
+                if (_addAnswerController.text.isEmpty) return;
+                var fUser = FirebaseAuth.instance.currentUser;
+                UserModel user = UserModel()
+                  ..name = fUser.displayName
+                  ..uid = fUser.uid
+                  ..imageUrl = fUser.photoURL;
+                CommunityAnswerModel answer = CommunityAnswerModel()
+                  ..text = _addAnswerController.text
+                  ..upVotes = 0
+                  ..downVotes = 0
+                  ..votes = "0"
+                  ..postedAt = DateTime.now()
+                  ..user = user;
+                await Provider.of<CommunityProvider>(context, listen: false)
                     .addNewAnswerTo(widget.communityPostModel, answer);
                 setState(() {
                   _addAnswerController.clear();
@@ -258,7 +313,8 @@ class _ViewCommunityPostScreenState extends State<ViewCommunityPostScreen> {
                 });
               },
               decoration: InputDecoration(
-                border: InputBorder.none, hintText: "Got an answer?",
+                border: InputBorder.none,
+                hintText: "Got an answer?",
               ),
             ),
           ),
@@ -283,11 +339,8 @@ class _ViewCommunityPostScreenState extends State<ViewCommunityPostScreen> {
             ),
           if (widget.communityPostModel.answers != null &&
               widget.communityPostModel.answers.length != 0)
-            ListView.builder(
-              shrinkWrap: true,
-              itemBuilder: (_, index) {
-                CommunityAnswerModel answer =
-                    widget.communityPostModel.answers[index];
+            Column(
+              children:widget.communityPostModel.answers.map((answer) {
                 return Row(
                   children: <Widget>[
                     Column(
@@ -330,10 +383,23 @@ class _ViewCommunityPostScreenState extends State<ViewCommunityPostScreen> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
-                            Text(
-                              answer.user.name,
-                              style: theme.textTheme.headline6
-                                  .copyWith(color: theme.primaryColor),
+                            GestureDetector(
+                              onTap: () async {
+                                UserModel user =
+                                await Provider.of<UserProvider>(
+                                    context,
+                                    listen: false)
+                                    .getUserDetails(answer.user);
+                                pushNewScreen(context,
+                                    screen: ProfileScreen(
+                                      user: user,
+                                    ));
+                              },
+                              child: Text(
+                                answer.user.name,
+                                style: theme.textTheme.headline6
+                                    .copyWith(color: theme.primaryColor),
+                              ),
                             ),
                             Text(answer.text)
                           ],
@@ -342,8 +408,8 @@ class _ViewCommunityPostScreenState extends State<ViewCommunityPostScreen> {
                     )
                   ],
                 );
-              },
-              itemCount: widget.communityPostModel.answers.length,
+              }).toList(growable: false),
+
             ),
         ],
       ),
@@ -353,9 +419,7 @@ class _ViewCommunityPostScreenState extends State<ViewCommunityPostScreen> {
   void _loadAnswers() async {
     await Provider.of<CommunityProvider>(context, listen: false)
         .loadAnswersFor(widget.communityPostModel);
-    setState(() {
-
-    });
+    setState(() {});
   }
 
   void _loadUserVote() {

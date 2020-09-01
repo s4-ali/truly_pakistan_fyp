@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:provider/provider.dart';
 import 'package:truly_pakistan_fyp/models/user_model.dart';
+import 'package:truly_pakistan_fyp/providers/chat/chat_provider.dart';
 import 'package:truly_pakistan_fyp/providers/user/user_provider.dart';
 import 'package:truly_pakistan_fyp/ui/screens/marketplace_screen.dart';
 import 'package:truly_pakistan_fyp/ui/screens/notifications_screen.dart';
@@ -80,7 +81,8 @@ class _HomeScreenState extends State<HomeScreen> {
       NotificationsScreen(),
       Consumer<UserProvider>(
         builder: (_,value,__){
-          return ProfileScreen(userModel: value.getCurrentUser(),);
+          Provider.of<ChatProvider>(context,listen: false).init(value.getCurrentUser());
+          return ProfileScreen(user: value.getCurrentUser(),);
         },
       ),
     ];

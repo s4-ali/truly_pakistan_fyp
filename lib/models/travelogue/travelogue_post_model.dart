@@ -17,6 +17,7 @@ class TraveloguePostModel{
   List<TravelogueCommentModel> comments;
   String timeElapsed="1 minute ago";
   String id;
+  bool isReacted=false;
 
   TraveloguePostModel fromMap(Map<String, dynamic> map) {
     if(map["description"]!=null && map["description"] is String)
@@ -58,7 +59,7 @@ class TraveloguePostModel{
     map["reacts"]=reacts;
     map["totalComments"]=totalComments;
     map["postedAt"]=postedAt;
-    map["user"]=user.toMap();
+    map["user"]=user.toMapBasic();
     map["tags"]=tags;
     map["locations"]=locations;
     map["images"]=images;

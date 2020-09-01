@@ -75,7 +75,23 @@ class UserProvider extends ChangeNotifier{
 
   Future<UserModel> getUserDetails(UserModel user)async{
     var info = await _userRepository.getUserInfo(user.uid);
+    if(info==null)return user;
     return user.fromMap(info);
+  }
+
+  Future<bool> isCurrentUserFollowing(String otherUid) async{
+    var doc=await _userRepository.getFollowingDocument(_userModel.uid,otherUid);
+    if(doc!=null&&doc.exists)
+      return true;
+    return false;
+  }
+
+  Future<String> unFollowUser(UserModel user)  async{
+    return await _userRepository.removeFromFollowing(_userModel.uid,user.uid);
+  }
+
+  Future<String> followUser(UserModel user) async{
+    return await _userRepository.addFollowing(_userModel.uid,user.uid,{"name":user.name,"imageUrl":user.imageUrl});
   }
 
 }

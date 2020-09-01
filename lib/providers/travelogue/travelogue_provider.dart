@@ -43,7 +43,7 @@ class TravelogueProvider extends ChangeNotifier{
     loadTraveloguePosts();
   }
 
-  Future loadAnswersFor(TraveloguePostModel traveloguePostModel)async{
+  Future loadCommentsFor(TraveloguePostModel traveloguePostModel)async{
     var answerDocs=await _travelogueRepository.getTravelogueCommentsFor(traveloguePostModel.id);
     List<TravelogueCommentModel> comments=List();
     for(var doc in answerDocs){
@@ -59,24 +59,21 @@ class TravelogueProvider extends ChangeNotifier{
   }
 
   Future addReactionTo(TraveloguePostModel traveloguePostModel)async{
-    var fUser=FirebaseAuth.instance.currentUser;
-    _travelogueRepository.reactOnPost(
-        traveloguePostModel.id,
-        fUser.uid,
-        {'imageUrl':fUser.photoURL,
-          'name':fUser.displayName,
-          'react':0,
-        });
+    await _react(1, traveloguePostModel);
   }
 
   Future removeReactionTo(TraveloguePostModel traveloguePostModel)async{
+    await _react(0, traveloguePostModel);
+  }
+
+  Future _react(int reaction,TraveloguePostModel traveloguePostModel)async{
     var fUser=FirebaseAuth.instance.currentUser;
-    _travelogueRepository.reactOnPost(
+    await _travelogueRepository.reactOnPost(
         traveloguePostModel.id,
         fUser.uid,
         {'imageUrl':fUser.photoURL,
           'name':fUser.displayName,
-          'react':1,
+          'reaction':reaction,
         });
   }
 

@@ -1,10 +1,15 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:provider/provider.dart';
 import 'package:truly_pakistan_fyp/models/travelogue/travelogue_post_model.dart';
+import 'package:truly_pakistan_fyp/models/user_model.dart';
 import 'package:truly_pakistan_fyp/providers/travelogue/travelogue_provider.dart';
+import 'package:truly_pakistan_fyp/providers/user/user_provider.dart';
 import 'package:truly_pakistan_fyp/ui/widgets/comments_bottom_sheet.dart';
 import 'package:truly_pakistan_fyp/utils.dart';
+
+import '../profile_screen.dart';
 
 class ViewMediaPostScreen extends StatefulWidget {
   final TraveloguePostModel traveloguePost;
@@ -17,7 +22,6 @@ class ViewMediaPostScreen extends StatefulWidget {
 
 class _ViewMediaPostScreenState extends State<ViewMediaPostScreen> {
   bool _isOptionsVisible=false;
-  bool _isActive=false;
 
 
   @override
@@ -28,7 +32,7 @@ class _ViewMediaPostScreenState extends State<ViewMediaPostScreen> {
 
   void _loadComments() async {
     await Provider.of<TravelogueProvider>(context, listen: false)
-        .loadAnswersFor(widget.traveloguePost);
+        .loadCommentsFor(widget.traveloguePost);
 //    setState(() {
 //
 //    });
@@ -160,11 +164,18 @@ class _ViewMediaPostScreenState extends State<ViewMediaPostScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Text(
-                      widget.traveloguePost.user.name,
-                      style: Theme.of(context)
-                          .textTheme.headline6
-                          .copyWith(color: Colors.white),
+                    GestureDetector(
+                      onTap: ()async{
+                        UserModel user=await Provider.of<UserProvider>(context,listen: false)
+                            .getUserDetails(widget.traveloguePost.user);
+                        pushNewScreen(context, screen: ProfileScreen(user: user,));
+                      },
+                      child: Text(
+                        widget.traveloguePost.user.name,
+                        style: Theme.of(context)
+                            .textTheme.headline6
+                            .copyWith(color: Colors.white),
+                      ),
                     ),
                     Text(widget.traveloguePost.timeElapsed,style: TextStyle(color: Colors.white.withAlpha(180),fontSize: 12),),
                   ],
@@ -182,7 +193,15 @@ class _ViewMediaPostScreenState extends State<ViewMediaPostScreen> {
     return GestureDetector(
       onTap: (){
         setState(() {
-          _isActive=!_isActive;
+          if(widget.traveloguePost.isReacted){
+            widget.traveloguePost.isReacted=false;
+            widget.traveloguePost.reacts--;
+            Provider.of<TravelogueProvider>(context,listen: false).removeReactionTo(widget.traveloguePost);
+          }else{
+            widget.traveloguePost.isReacted=true;
+            widget.traveloguePost.reacts++;
+            Provider.of<TravelogueProvider>(context,listen: false).addReactionTo(widget.traveloguePost);
+          }
         }
         );
       },
@@ -191,8 +210,8 @@ class _ViewMediaPostScreenState extends State<ViewMediaPostScreen> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Icon(Icons.keyboard_arrow_up, color: _isActive ? Theme.of(context).primaryColor : Colors.grey, size: 35,),
-            Text("Upvote", style: TextStyle(color: _isActive ? Theme.of(context).primaryColor : Colors.grey,fontSize: 17),)
+            Icon(Icons.keyboard_arrow_up, color: widget.traveloguePost.isReacted ? Theme.of(context).primaryColor : Colors.grey, size: 35,),
+            Text("Upvote", style: TextStyle(color: widget.traveloguePost.isReacted ? Theme.of(context).primaryColor : Colors.grey,fontSize: 17),)
           ],
         ),
       ),

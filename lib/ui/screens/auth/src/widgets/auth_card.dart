@@ -573,7 +573,7 @@ class _LoginCardState extends State<_LoginCard> with TickerProviderStateMixin {
       child: FlatButton(
         child: Text(
           messages.forgotPasswordButton,
-          style: theme.textTheme.body1,
+          style: theme.textTheme.bodyText1,
           textAlign: TextAlign.left,
         ),
         onPressed: buttonEnabled ? () {

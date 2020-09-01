@@ -6,7 +6,7 @@ class UserModel{
   String bio;
   String city;
   String country;
-  DateTime dateOfBirth;
+  String dateOfBirth;
   String email;
   String facebookURL;
   String gender;
@@ -22,6 +22,14 @@ class UserModel{
 
   bool isCurrentUser=false;
 
+
+  HashMap<String,dynamic> toMapBasic() {
+    HashMap<String,dynamic> map=HashMap();
+    map["uid"]=uid;
+    map["imageUrl"]=imageUrl;
+    map["name"]=name;
+    return map;
+  }
 
   HashMap<String,dynamic> toMap() {
     HashMap<String,dynamic> map=HashMap();
@@ -45,6 +53,8 @@ class UserModel{
   }
 
   UserModel fromMap(Map<String,dynamic> map) {
+    if(map["uid"]!=null)
+      uid=map["uid"];
     bio=map["bio"];
     city=map["city"];
     country=map["country"];
@@ -58,8 +68,16 @@ class UserModel{
     name=map["name"];
     state=map["state"];
     status=map["status"];
-    totalFollowing=map["totalFollowing"];
-    totalFollowers=map["totalFollowers"];
+    if(map["totalFollowing"] is int){
+      totalFollowing=map["totalFollowing"] as int;
+    }else if(map["totalFollowing"] is double){
+      totalFollowing=(map["totalFollowing"] as double).toInt();
+    }
+    if(map["totalFollowers"] is int){
+      totalFollowers=map["totalFollowers"] as int;
+    }else if(map["totalFollowers"] is double){
+      totalFollowers=(map["totalFollowers"] as double).toInt();
+    }
     twitterURL=map["twitterURL"];
     return this;
   }

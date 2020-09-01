@@ -16,7 +16,7 @@ class FollowTileWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: (){
-        pushNewScreen(context,screen: ProfileScreen(userModel: user,));
+        pushNewScreen(context,screen: ProfileScreen(user: user,));
       },
       child: Container(
         margin: EdgeInsets.only(bottom: 8,left: 16,right: 16),

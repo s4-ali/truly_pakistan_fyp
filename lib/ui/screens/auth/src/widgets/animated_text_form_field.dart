@@ -204,6 +204,7 @@ class _AnimatedTextFormFieldState extends State<AnimatedTextFormField> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     Widget textField = TextFormField(
+      style: theme.textTheme.bodyText1,
       controller: widget.controller,
       focusNode: widget.focusNode,
       decoration: _getInputDecoration(theme),

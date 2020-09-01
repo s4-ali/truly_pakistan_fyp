@@ -19,6 +19,7 @@ class CommunityPostModel{
   List<CommunityAnswerModel> answers;
   String timeElapsed="1 minute ago";
   String id;
+  int currentVote=0;
 
   CommunityPostModel fromMap(Map<String, dynamic> map) {
     if(map["title"]!=null && map["title"] is String)
@@ -67,7 +68,7 @@ class CommunityPostModel{
     map["totalVotes"]=totalVotes;
     map["totalAnswers"]=totalAnswers;
     map["postedAt"]=postedAt;
-    map["user"]=user.toMap();
+    map["user"]=user.toMapBasic();
     map["tags"]=tags;
     map["locations"]=locations;
     map["images"]=images;

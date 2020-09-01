@@ -1,7 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
+import 'package:provider/provider.dart';
 import 'package:truly_pakistan_fyp/models/travelogue/travelogue_post_model.dart';
+import 'package:truly_pakistan_fyp/models/user_model.dart';
+import 'package:truly_pakistan_fyp/providers/travelogue/travelogue_provider.dart';
+import 'package:truly_pakistan_fyp/providers/user/user_provider.dart';
+import 'package:truly_pakistan_fyp/ui/screens/profile_screen.dart';
 import 'package:truly_pakistan_fyp/ui/screens/travelogue/view_travelogue_screen.dart';
 
 class TraveloguePostWidget extends StatefulWidget {
@@ -49,7 +54,17 @@ class _TraveloguePostWidgetState extends State<TraveloguePostWidget> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Text(widget.traveloguePost.user.name,style: Theme.of(context).textTheme.headline6,),
+                    GestureDetector(
+                      onTap: ()async{
+                        UserModel user=await Provider.of<UserProvider>(context,listen: false)
+                            .getUserDetails(widget.traveloguePost.user);
+                        pushNewScreen(context, screen: ProfileScreen(user: user,),withNavBar: false);
+                      },
+                      child: Text(
+                        widget.traveloguePost.user.name,
+                        style: Theme.of(context).textTheme.headline6,
+                      ),
+                    ),
                     Text(widget.traveloguePost.timeElapsed,style: TextStyle(color: Theme.of(context).textTheme.bodyText1.color.withAlpha(180),fontSize: 12),),
                   ],
                 ),
@@ -84,7 +99,22 @@ class _TraveloguePostWidgetState extends State<TraveloguePostWidget> {
               children: <Widget>[
                 Row(
                   children: <Widget>[
-                    Icon(Icons.favorite),
+                    GestureDetector(
+                      onTap:(){
+                        setState(() {
+                          if(widget.traveloguePost.isReacted){
+                            widget.traveloguePost.isReacted=false;
+                            widget.traveloguePost.reacts--;
+                            Provider.of<TravelogueProvider>(context,listen: false).removeReactionTo(widget.traveloguePost);
+                          }else{
+                            widget.traveloguePost.isReacted=true;
+                            widget.traveloguePost.reacts++;
+                            Provider.of<TravelogueProvider>(context,listen: false).addReactionTo(widget.traveloguePost);
+                          }
+                        });
+                      },
+                      child: Icon(Icons.favorite,color: widget.traveloguePost.isReacted?Theme.of(context).primaryColor:Theme.of(context).iconTheme.color,),
+                    ),
                     SizedBox(width: 4,),
                     Text("${widget.traveloguePost.reacts??0}"),
                     SizedBox(width: 16,),
