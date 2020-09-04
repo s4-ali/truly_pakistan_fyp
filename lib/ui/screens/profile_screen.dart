@@ -7,9 +7,11 @@ import 'package:provider/provider.dart';
 import 'package:truly_pakistan_fyp/models/chat/chat_room_model.dart';
 import 'package:truly_pakistan_fyp/models/user_model.dart';
 import 'package:truly_pakistan_fyp/providers/chat/chat_provider.dart';
+import 'package:truly_pakistan_fyp/providers/theme_provider.dart';
 import 'package:truly_pakistan_fyp/providers/user/user_provider.dart';
 import 'package:truly_pakistan_fyp/ui/screens/chat/chat_screen.dart';
 import 'package:truly_pakistan_fyp/ui/screens/community/users_question_screen.dart';
+import 'package:truly_pakistan_fyp/ui/screens/follow_list_screen.dart';
 import 'package:truly_pakistan_fyp/ui/screens/profile/edit_profile_screen.dart';
 import 'package:truly_pakistan_fyp/ui/screens/settings_screen.dart';
 import 'package:truly_pakistan_fyp/ui/screens/travelogue/users_travelogue_screen.dart';
@@ -45,6 +47,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print("ReBuilding profile");
     return Scaffold(
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -97,30 +100,40 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: <Widget>[
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                Text(
-                                  (widget.user.totalFollowers ?? "0")
-                                      .toString(),
-                                  style: TextStyle(fontSize: 16),
-                                ),
-                                Text("Followers"),
-                              ],
+                            InkWell(
+                              onTap:(){
+                                pushNewScreen(context, screen: FollowListScreen(widget.user,showFollowings:false),withNavBar: false);
+                              },
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  Text(
+                                    (widget.user.totalFollowers ?? "0")
+                                        .toString(),
+                                    style: TextStyle(fontSize: 16),
+                                  ),
+                                  Text("Followers"),
+                                ],
+                              ),
                             ),
                             SizedBox(
                               width: 10,
                             ),
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                Text(
-                                  (widget.user.totalFollowing ?? "0")
-                                      .toString(),
-                                  style: TextStyle(fontSize: 16),
-                                ),
-                                Text("Following"),
-                              ],
+                            InkWell(
+                              onTap: (){
+                                pushNewScreen(context, screen: FollowListScreen(widget.user,showFollowings:true),withNavBar: false);
+                              },
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  Text(
+                                    (widget.user.totalFollowing ?? "0")
+                                        .toString(),
+                                    style: TextStyle(fontSize: 16),
+                                  ),
+                                  Text("Following"),
+                                ],
+                              ),
                             ),
                           ],
                         ),
@@ -222,6 +235,39 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   vertical: 8.0, horizontal: 16.0),
                               child: Icon(
                                 Icons.edit,
+                                color: Colors.white,
+                                size: 25,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                if (widget.user.isCurrentUser)
+                  Align(
+                    alignment: Alignment.topRight,
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            top: (32.0 + 50.0 + 48.0), right: 8),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(4),
+                            color: Color(0x22000000),
+                          ),
+                          child: InkWell(
+                            onTap: () {
+                              Provider.of<ThemeProvider>(context,listen: false).switchTheme();
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 8.0, horizontal: 16.0),
+                              child: Icon(
+                                Icons.brightness_6,
                                 color: Colors.white,
                                 size: 25,
                               ),

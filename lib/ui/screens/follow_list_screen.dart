@@ -1,10 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:truly_pakistan_fyp/models/user_model.dart';
+import 'package:truly_pakistan_fyp/providers/user/user_provider.dart';
 import 'package:truly_pakistan_fyp/static_data.dart';
 import 'package:truly_pakistan_fyp/ui/widgets/follow_tile_widget.dart';
 
 class FollowListScreen extends StatefulWidget {
+  final UserModel user;
+  final bool showFollowings;
+
+  FollowListScreen(this.user, {this.showFollowings=false});
+
   @override
   _FollowListScreenState createState() => _FollowListScreenState();
 }
@@ -15,22 +22,7 @@ class _FollowListScreenState extends State<FollowListScreen> {
 
   @override
   void initState() {
-    var user=UserModel();
-    user.name="Asfar";
-    user.imageUrl=imageUrl;
-    _usersList.add(user);
-    _usersList.add(user);
-    _usersList.add(user);
-    _usersList.add(user);
-    _usersList.add(user);
-    _usersList.add(user);
-    _usersList.add(user);
-    _usersList.add(user);
-    _usersList.add(user);
-    _usersList.add(user);
-    _usersList.add(user);
-    _usersList.add(user);
-    _usersList.add(user);
+    loadUsers();
     super.initState();
   }
 
@@ -57,5 +49,17 @@ class _FollowListScreenState extends State<FollowListScreen> {
         itemCount: _usersList.length,
       )
     );
+  }
+
+  void loadUsers()async {
+    var users;
+    if(widget.showFollowings)
+      users=await Provider.of<UserProvider>(context,listen: false).getFollowingsOf(widget.user);
+    else
+      users=await Provider.of<UserProvider>(context,listen: false).getFollowersOf(widget.user);
+    setState(() {
+      _usersList.clear();
+      _usersList.addAll(users);
+    });
   }
 }

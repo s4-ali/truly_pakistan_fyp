@@ -56,4 +56,18 @@ class UserRepository{
     }
 
   }
+
+  Future<List<DocumentSnapshot>> getFollowerOf(String uid) async {
+    return (await FirebaseFirestore.instance.collection("users")
+        .doc(uid)
+        .collection("Followers")
+        .get()).docs;
+  }
+  Future<List<DocumentSnapshot>> getFollowingOf(String uid) async {
+    return (await FirebaseFirestore.instance.collection("users")
+        .doc(uid)
+        .collection("Following")
+        .get()).docs;
+  }
+
 }

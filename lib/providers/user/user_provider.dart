@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
@@ -92,6 +93,24 @@ class UserProvider extends ChangeNotifier{
 
   Future<String> followUser(UserModel user) async{
     return await _userRepository.addFollowing(_userModel.uid,user.uid,{"name":user.name,"imageUrl":user.imageUrl});
+  }
+
+  Future<List<UserModel>> getFollowingsOf(UserModel user) async{
+    var docs=await _userRepository.getFollowingOf(user.uid);
+    List<UserModel> users=List();
+    for(DocumentSnapshot doc in docs){
+      users.add(UserModel().fromMap(doc.data()));
+    }
+    return users;
+  }
+
+  Future<List<UserModel>> getFollowersOf(UserModel user) async{
+    var docs=await _userRepository.getFollowerOf(user.uid);
+    List<UserModel> users=List();
+    for(DocumentSnapshot doc in docs){
+      users.add(UserModel().fromMap(doc.data()));
+    }
+    return users;
   }
 
 }
