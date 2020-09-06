@@ -13,6 +13,8 @@ class CommunityAnswerModel{
   UserModel user;
   DateTime postedAt;
 
+  int currentVote=0;
+
   CommunityAnswerModel fromMap(Map<String,dynamic> map) {
     this.text=map["text"];
     this.upVotes=map["upVotes"];
