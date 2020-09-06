@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 
 abstract class BaseAuth {
@@ -17,6 +18,10 @@ class Authentication implements BaseAuth {
   Future<String> signInWithEmailAndPassword(String email, String password) async {
     print("signInWithEmailAndPassword");
     final User user = (await _firebaseAuth.signInWithEmailAndPassword(email: email, password: password)).user;
+    var messaging=FirebaseMessaging();
+    String token=await messaging.getToken();
+    if(user!=null)
+      FirebaseFirestore.instance.collection("users").doc(user.uid).set({"token":token},SetOptions(merge: true));
     return user?.uid;
   }
 
