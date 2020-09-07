@@ -53,6 +53,8 @@ class UserModel{
   }
 
   UserModel fromMap(Map<String,dynamic> map) {
+    if(map["objectID"]!=null&&map["objectID"] is String)
+      uid=map["objectID"];
     if(map["uid"]!=null)
       uid=map["uid"];
     bio=map["bio"];

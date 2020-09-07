@@ -1,10 +1,7 @@
 import 'dart:core';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:provider/provider.dart';
 import 'package:truly_pakistan_fyp/models/user_model.dart';
-import 'package:truly_pakistan_fyp/providers/user/user_provider.dart';
 
 class MarketPlaceItemModel{
   List<String> activities;
@@ -22,8 +19,11 @@ class MarketPlaceItemModel{
   String title;
   String to;
   UserModel user;
+  String id;
 
   MarketPlaceItemModel fromMap(Map<String,dynamic> map){
+    if(map["objectID"]!=null&&map["objectID"] is String)
+      id=map["objectID"];
     if(map["activities"]!=null) {
       activities=List();
       for(var s in map["activities"] as List<dynamic>){

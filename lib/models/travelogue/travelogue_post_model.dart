@@ -20,6 +20,8 @@ class TraveloguePostModel{
   bool isReacted=false;
 
   TraveloguePostModel fromMap(Map<String, dynamic> map) {
+    if(map["objectID"]!=null&&map["objectID"] is String)
+      id=map["objectID"];
     if(map["description"]!=null && map["description"] is String)
       description=map["description"];
     if(map["postedAt"]!=null && map["postedAt"] is Timestamp)

@@ -22,6 +22,8 @@ class CommunityPostModel{
   int currentVote=0;
 
   CommunityPostModel fromMap(Map<String, dynamic> map) {
+    if(map["objectID"]!=null&&map["objectID"] is String)
+      id=map["objectID"];
     if(map["title"]!=null && map["title"] is String)
       title=map["title"];
     if(map["description"]!=null && map["description"] is String)
