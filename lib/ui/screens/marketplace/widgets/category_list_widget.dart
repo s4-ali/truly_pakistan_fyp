@@ -3,15 +3,15 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
+import 'package:truly_pakistan_fyp/models/marketplace/marketplace_item_model.dart';
 import 'package:truly_pakistan_fyp/ui/screens/marketplace/activities/tour_plan_activity.dart';
-import 'package:truly_pakistan_fyp/ui/screens/marketplace/models/ad_model.dart';
 
 import '../data.dart';
 import '../main.dart';
 
 class CategoryListWidget extends StatelessWidget {
 
-  final List<AdModel> adsList;
+  final List<MarketPlaceItemModel> adsList;
   final String categoryTitle;
 
   const CategoryListWidget(
@@ -45,7 +45,7 @@ class CategoryListWidget extends StatelessWidget {
                   color: Color(0xff008736),
                 ),
                 onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>MarketPlace(pageModel:servicesPageModel)));
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>MarketPlace(pageModel:null)));
                 },
               )
             ],
@@ -61,9 +61,9 @@ class CategoryListWidget extends StatelessWidget {
               return GestureDetector(
                 onTap: (){
                   pushNewScreen(context,
-                      screen: TourPlanActivity(position: "_$categoryTitle$position",path: adsList[position].imgUrl,),
+                      screen: TourPlanActivity(position: "_$categoryTitle$position",path: adsList[position].images[0],),
                       withNavBar: false,
-                      customPageRoute: MaterialPageRoute(builder: (_)=>TourPlanActivity(position: "_$categoryTitle$position",path: adsList[position].imgUrl,)));
+                      customPageRoute: MaterialPageRoute(builder: (_)=>TourPlanActivity(position: "_$categoryTitle$position",path: adsList[position].images[0],)));
                   print("On Click $position");
                 },
                 child: Padding(
@@ -75,7 +75,7 @@ class CategoryListWidget extends StatelessWidget {
                         children: <Widget>[
                           Hero(
                             tag:"cover_image_$categoryTitle$position",
-                            child: Image.network(adsList[position].imgUrl,
+                            child: Image.network(adsList[position].images[0],
                                 width: 200.0,height:150,fit: BoxFit.fill,),
                           ),
                           Wrap(
@@ -104,7 +104,7 @@ class CategoryListWidget extends StatelessWidget {
                                     ),
                                     Align(
                                       alignment: Alignment.bottomRight,
-                                      child: Text(adsList[position].price,
+                                      child: Text(adsList[position].price.toString(),
                                         style: TextStyle(
                                             fontSize: 18,
                                             color: Color(0xff008B6A)

@@ -62,7 +62,6 @@ class _MarketPlaceState extends State<MarketPlace> {
             slivers: <Widget>[
               SliverList(
                 delegate: SliverChildListDelegate([
-
                   Container(
                     padding: EdgeInsets.only(top: 25, right: 20, left: 20, bottom: 10),
                     child: Row(
@@ -113,7 +112,7 @@ class _MarketPlaceState extends State<MarketPlace> {
                         borderRadius: BorderRadius.circular(8.0),
                         child: Column(
                           children: <Widget>[
-                            Image.network(adModels[position].imgUrl,
+                            Image.network(widget.pageModel.adsList[position].images[0],
                               height:150,fit: BoxFit.fill,),
                             Wrap(
                               children: <Widget>[
@@ -131,7 +130,7 @@ class _MarketPlaceState extends State<MarketPlace> {
                                   child: Stack(
                                     children: <Widget>[
                                       Text(
-                                        adModels[position].title,
+                                        widget.pageModel.adsList[position].title,
                                         style: TextStyle(
                                           color: Colors.black,
                                           fontSize: 13,
@@ -140,7 +139,7 @@ class _MarketPlaceState extends State<MarketPlace> {
                                       ),
                                       Align(
                                         alignment: Alignment.bottomRight,
-                                        child: Text(adModels[position].price,
+                                        child: Text(widget.pageModel.adsList[position].title.toString(),
                                           style: TextStyle(
                                               fontSize: 18,
                                               color: Color(0xff008736)
@@ -157,7 +156,7 @@ class _MarketPlaceState extends State<MarketPlace> {
                       ),
                     );
                   },
-                childCount: adModels.length,
+                childCount: widget.pageModel.adsList.length,
               ),
             )
             ],

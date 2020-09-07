@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:truly_pakistan_fyp/ui/screens/marketplace/models/ad_model.dart';
+import 'package:truly_pakistan_fyp/models/marketplace/marketplace_item_model.dart';
 
 class ItemsListWidget extends StatelessWidget {
 
-  final List<AdModel> adsList;
+  final List<MarketPlaceItemModel> adsList;
   final double height;
 
   const ItemsListWidget({Key key, this.adsList, this.height}) : super(key: key);
@@ -27,7 +27,7 @@ class ItemsListWidget extends StatelessWidget {
                   borderRadius: BorderRadius.circular(8.0),
                   child: Column(
                     children: <Widget>[
-                      Image.network(adsList[position].imgUrl,
+                      Image.network(adsList[position].images[0],
                         width: screenWidth/2-padding,height:150,fit: BoxFit.fill,),
                       Wrap(
 //                            direction: ,
@@ -54,7 +54,7 @@ class ItemsListWidget extends StatelessWidget {
                                 ),
                                 Align(
                                   alignment: Alignment.bottomRight,
-                                  child: Text(adsList[position].price,
+                                  child: Text(adsList[position].price.toString(),
                                     style: TextStyle(
                                         fontSize: 18,
                                         color: Color(0xff28B94A)
