@@ -6,12 +6,12 @@ import 'package:provider/provider.dart';
 import 'package:truly_pakistan_fyp/models/user_model.dart';
 import 'package:truly_pakistan_fyp/providers/chat/chat_provider.dart';
 import 'package:truly_pakistan_fyp/providers/user/user_provider.dart';
-import 'package:truly_pakistan_fyp/ui/screens/marketplace_screen.dart';
-import 'package:truly_pakistan_fyp/ui/screens/notifications_screen.dart';
+import 'file:///C:/Projects/Flutter/truly_pakistan_fyp/lib/ui/screens/notification/notifications_screen.dart';
 import 'package:truly_pakistan_fyp/ui/screens/profile_screen.dart';
 import 'package:truly_pakistan_fyp/ui/screens/travelogue/travelogue_screen.dart';
 
 import 'community/community_screen.dart';
+import 'marketplace/marketplace_screen.dart';
 
 class HomeScreen extends StatefulWidget {
 

@@ -8,7 +8,7 @@ class MarketPlaceItemModel{
   String date;
   List<String> day;
   String description;
-  int duration;
+  String duration;
   String from;
   List<String> images;
   DateTime postedAt;
@@ -38,7 +38,10 @@ class MarketPlaceItemModel{
       }
     }
     description=map["description"];
-    duration=map["duration"];
+    if(map["duration"] is String)
+      duration=map["duration"];
+    else if(map["duration"] is int)
+      duration=map["duration"].toString();
     from=map["from"];
     if(map["images"]!=null) {
       images=List();
@@ -46,15 +49,23 @@ class MarketPlaceItemModel{
         images.add(s.toString());
       }
     }
-    postedAt=(map["postedAt"] as Timestamp).toDate();
-    price=map["price"];
+    if(map["postedAt"] is Timestamp)
+      postedAt=(map["postedAt"] as Timestamp).toDate();
+    if(map["price"] is int)
+      price=map["price"];
+    else if(map["price"] is String){
+      price=int.parse(map["price"]);
+    }
     if(map["servicesAvailable"]!=null) {
       servicesAvailable=List();
       for(var s in map["servicesAvailable"] as List<dynamic>){
         servicesAvailable.add(s.toString());
       }
     }
-    status=map["status"];
+    if(map["status"] is int)
+      status=map["status"];
+    else if(map["status"] is String)
+      status=int.parse(map["status"]);
     if(map["tags"]!=null) {
       tags=List();
       for(var s in map["tags"] as List<dynamic>){
@@ -66,5 +77,25 @@ class MarketPlaceItemModel{
     to=map["to"];
     user=UserModel().fromMap(map["user"]);
     return this;
+  }
+
+  Map<String,dynamic> toMap() {
+    Map<String,dynamic> map=Map();
+    map["activities"]=activities;
+    map["date"]=date;
+    map["day"]=day;
+    map["description"]=description;
+    map["duration"]=duration;
+    map["from"]=from;
+    map["images"]=images;
+    map["postedAt"]=postedAt;
+    map["price"]=price;
+    map["servicesAvailable"]=servicesAvailable;
+    map["status"]=status;
+    map["tags"]=tags;
+    map["title"]=title;
+    map["to"]=to;
+    map["user"]=user.toMapBasic();
+    return map;
   }
 }

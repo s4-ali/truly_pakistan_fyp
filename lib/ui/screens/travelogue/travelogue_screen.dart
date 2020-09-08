@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:provider/provider.dart';
 import 'package:truly_pakistan_fyp/providers/travelogue/travelogue_provider.dart';
+import 'package:truly_pakistan_fyp/ui/screens/search_screens.dart';
 import 'package:truly_pakistan_fyp/ui/screens/travelogue/add_travelogue_screen.dart';
 import 'package:truly_pakistan_fyp/ui/widgets/travelogue_post_widget.dart';
 
@@ -22,7 +23,12 @@ class _TravelogueScreenState extends State<TravelogueScreen> {
         actions: <Widget>[
           IconButton(
             onPressed: (){
-              print("onPressed");
+              pushNewScreen(context, screen: SearchScreen(),withNavBar: false);
+            },
+            icon: Icon(Icons.search,color: Theme.of(context).primaryColor,),
+          ),
+          IconButton(
+            onPressed: (){
               pushNewScreen(context, screen: AddTravelogueScreen(),withNavBar: false);
             },
             icon: Icon(Icons.add,color: Theme.of(context).primaryColor,),

@@ -18,6 +18,8 @@ class CommunityProvider extends ChangeNotifier{
   List<CommunityPostModel> getCommunityPosts() => _communityPosts;
 
   Future<String> addCommunityPost(CommunityPostModel communityPostModel) async {
+    _communityPosts.insert(0,communityPostModel..timeElapsed="Just now");
+    notifyListeners();
     return _communityRepository.addCommunityPost(communityPostModel.toMap());
   }
 
@@ -54,35 +56,71 @@ class CommunityProvider extends ChangeNotifier{
     communityPostModel.answers.insert(0,answer);
   }
 
-  Future addUpVoteTo(CommunityPostModel communityPostModel)async{
+  Future addUpVoteTo(CommunityPostModel communityPostModel,{CommunityAnswerModel answer})async{
     var fUser=FirebaseAuth.instance.currentUser;
-    _communityRepository.voteOnPost(
-        communityPostModel.id,
-        fUser.uid,
-        {'imageUrl':fUser.photoURL,
-          'name':fUser.displayName,
-          'vote':1,
-        });
+    if(answer!=null){
+      _communityRepository.voteOnAnswer(
+          communityPostModel.id,
+          answer.id,
+          fUser.uid,
+          {'imageUrl':fUser.photoURL,
+            'name':fUser.displayName,
+            'vote':1,
+          }
+      );
+    }else {
+      _communityRepository.voteOnPost(
+          communityPostModel.id,
+          fUser.uid,
+          {'imageUrl': fUser.photoURL,
+            'name': fUser.displayName,
+            'vote': 1,
+          });
+    }
   }
-  Future removeVoteTo(CommunityPostModel communityPostModel)async{
+  Future removeVoteTo(CommunityPostModel communityPostModel,{CommunityAnswerModel answer})async{
     var fUser=FirebaseAuth.instance.currentUser;
-    _communityRepository.voteOnPost(
-        communityPostModel.id,
-        fUser.uid,
-        {'imageUrl':fUser.photoURL,
-          'name':fUser.displayName,
-          'vote':0,
-        });
+    if(answer!=null){
+      _communityRepository.voteOnAnswer(
+          communityPostModel.id,
+          answer.id,
+          fUser.uid,
+          {'imageUrl':fUser.photoURL,
+            'name':fUser.displayName,
+            'vote':0,
+          }
+      );
+    }else {
+      _communityRepository.voteOnPost(
+          communityPostModel.id,
+          fUser.uid,
+          {'imageUrl': fUser.photoURL,
+            'name': fUser.displayName,
+            'vote': 0,
+          });
+    }
   }
-  Future addDownVoteTo(CommunityPostModel communityPostModel)async{
+  Future addDownVoteTo(CommunityPostModel communityPostModel,{CommunityAnswerModel answer})async{
     var fUser=FirebaseAuth.instance.currentUser;
-    _communityRepository.voteOnPost(
+    if(answer!=null){
+      _communityRepository.voteOnAnswer(
         communityPostModel.id,
+        answer.id,
         fUser.uid,
-        {'imageUrl':fUser.photoURL,
-          'name':fUser.displayName,
-          'vote':-1,
-        });
+          {'imageUrl':fUser.photoURL,
+            'name':fUser.displayName,
+            'vote':-1,
+          }
+      );
+    }else {
+      _communityRepository.voteOnPost(
+          communityPostModel.id,
+          fUser.uid,
+          {'imageUrl': fUser.photoURL,
+            'name': fUser.displayName,
+            'vote': -1,
+          });
+    }
   }
 
 
@@ -93,5 +131,10 @@ class CommunityProvider extends ChangeNotifier{
       communityPosts.add(CommunityPostModel().fromMap(dc.data()));
     }
     return communityPosts;
+  }
+
+  Future<CommunityPostModel> getQuestionById(String docId)async {
+    DocumentSnapshot doc=await _communityRepository.getQuestionById(docId);
+    return CommunityPostModel().fromMap(doc.data())..id=docId;
   }
 }

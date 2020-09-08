@@ -9,6 +9,7 @@ import 'package:truly_pakistan_fyp/models/image_upload_task.dart';
 import 'package:truly_pakistan_fyp/models/travelogue/travelogue_post_model.dart';
 import 'package:truly_pakistan_fyp/models/user_model.dart';
 import 'package:truly_pakistan_fyp/providers/travelogue/travelogue_provider.dart';
+import 'package:truly_pakistan_fyp/providers/user/user_provider.dart';
 
 import '../../../utils.dart';
 
@@ -461,11 +462,7 @@ class _AddTravelogueScreenState extends State<AddTravelogueScreen> {
     model.reacts=0;
     model.description=descriptionController.text;
     model.images=urls;
-    UserModel user=UserModel();
-    User firebaseUser=FirebaseAuth.instance.currentUser;
-    user.name=firebaseUser.displayName;
-    user.imageUrl=firebaseUser.photoURL;
-    user.uid=firebaseUser.uid;
+    UserModel user=Provider.of<UserProvider>(context,listen: false).getCurrentUser();
     model.postedAt=DateTime.now();
     model.user=user;
     model.totalComments=0;

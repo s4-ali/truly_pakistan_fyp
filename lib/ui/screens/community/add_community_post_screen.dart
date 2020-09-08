@@ -36,22 +36,17 @@ class _AddCommunityPostScreenState extends State<AddCommunityPostScreen> {
   @override
   void initState() {
     imageFiles=List();
-//    imageFiles.add(File("/data/user/0/com.appsbyasfar.truly_pakistan_fyp/cache/image_picker196060396631012281.jpg"));
-//    imageFiles.add(File("/data/user/0/com.appsbyasfar.truly_pakistan_fyp/cache/image_picker196060396631012281.jpg"));
-//    imageFiles.add(File("/data/user/0/com.appsbyasfar.truly_pakistan_fyp/cache/image_picker196060396631012281.jpg"));
-//    uploadCount=1;
-//    uploading=true;
-    tags=["tag1","tag2"];//List();
-    locations=["location1","location2"];//List();
+    tags=List();
+    locations=List();
 
     addTagEnabled=false;
     addLocationEnabled=false;
     uploading=false;
 
     titleController=TextEditingController();
-    titleController.text="test title";
+//    titleController.text="test title";
     descriptionController=TextEditingController();
-    descriptionController.text="description test";
+//    descriptionController.text="description test";
     tagController=TextEditingController();
     locationController=TextEditingController();
 
@@ -385,8 +380,12 @@ class _AddCommunityPostScreenState extends State<AddCommunityPostScreen> {
       source: source,
       cameraIcon: Icon(
         Icons.add,
-        color: Colors.red,
-      ),//cameraIcon and galleryIcon can change. If no icon provided default icon will be present
+        color: Theme.of(context).primaryColor,
+      ),
+      galleryIcon: Icon(
+        Icons.image,
+        color:Theme.of(context).primaryColor
+      )
     );
     print(image.path);
     setState(() {

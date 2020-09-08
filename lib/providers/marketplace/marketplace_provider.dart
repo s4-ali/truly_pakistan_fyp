@@ -37,7 +37,6 @@ extension Filter on List<MarketPlaceItemModel>{
 
   List<MarketPlaceItemModel> filterItemsByCategory(List<int> categories){
     List<MarketPlaceItemModel> filteredItems=List();
-    filteredItems.addAll(this);
     for(MarketPlaceItemModel item in this){
       var shouldAdd=false;
       for(int category in categories){

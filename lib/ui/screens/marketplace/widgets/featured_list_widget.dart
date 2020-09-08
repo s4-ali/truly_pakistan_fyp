@@ -9,7 +9,6 @@ class FeatureListWidget extends StatefulWidget {
   final List<MarketPlaceItemModel> adModels;
   final String title;
 
-
   FeatureListWidget({this.title,this.adModels,});
 
   @override
@@ -23,7 +22,6 @@ class _FeatureListWidgetState extends State<FeatureListWidget> {
 
   @override
   Widget build(BuildContext context) {
-
 
     PageController controller = PageController(initialPage: widget.adModels.length - 1);
     controller.addListener(() {
@@ -41,7 +39,7 @@ class _FeatureListWidgetState extends State<FeatureListWidget> {
             padding: EdgeInsets.only(left: 20.0,top: 8),
             child: Text("Featured",
                 style: TextStyle(
-                  color: Color(0xff008736),
+                  color: Theme.of(context).primaryColor,
                   fontSize: 38.0,
                   fontFamily: "Calibre-Semibold",
                   letterSpacing: 1.0,
@@ -128,7 +126,7 @@ class CardScrollWidget extends StatelessWidget {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(16.0),
                   boxShadow: [BoxShadow(color: Colors.black12,blurRadius: 5,offset: Offset(6,6)),],
-                  border: Border.all(color: Color(0x0f000000),width: 1)
+//                  border: Border.all(color: Color(0x0f000000),width: 1)
                 ),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(16.0),
@@ -146,7 +144,7 @@ class CardScrollWidget extends StatelessWidget {
                                 Container(
                                   decoration: BoxDecoration(
                                     boxShadow: [BoxShadow(color: Color(0x2F000000), offset: Offset(6,6),blurRadius: 6)],
-                                    color: Color(0xfffbfbfb),
+                                    color: Theme.of(context).cardColor,
                                   ),
                                   alignment: Alignment.bottomCenter,
                                   width: safeWidth,
@@ -157,7 +155,6 @@ class CardScrollWidget extends StatelessWidget {
                                       Text(
                                         adModels[i].title,
                                         style: TextStyle(
-                                          color: Colors.black,
                                           fontSize: 15,
                                           fontWeight: FontWeight.w600,
                                         ),
@@ -165,46 +162,13 @@ class CardScrollWidget extends StatelessWidget {
                                       Stack(
                                         children: <Widget>[
                                           Align(
-                                            child: Column(
-                                              mainAxisAlignment: MainAxisAlignment.start,
-                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                              children: <Widget>[
-                                                Row(
-                                                  children: <Widget>[
-                                                    Icon(Icons.history, size: 17,color: Color(0xffB1B1B1),),
-                                                    Text("  7 Days, ISB",
-                                                      style: TextStyle(
-                                                        fontSize: 10,
-                                                        color: Color(0xff888888),
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                                Row(
-                                                  children: <Widget>[
-                                                    Icon(Icons.history, size: 17,color: Color(0xffB1B1B1),),
-                                                    Text("  13-JAN-2020",
-                                                      style: TextStyle(
-                                                        fontSize: 10,
-                                                        color: Color(0xff888888),
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ],
-                                            ),
-                                            alignment: Alignment.bottomLeft,
-                                          ),
-
-                                          Align(
                                             alignment: Alignment.bottomRight,
                                             child: Text(adModels[i].price.toString(),
                                               style: TextStyle(
                                                   fontSize: 18,
-                                                  color: Color(0xff008B6A)
+                                                  color: Theme.of(context).primaryColor
                                               ),),
                                           ),
-
                                         ],
                                       ),
                                     ],

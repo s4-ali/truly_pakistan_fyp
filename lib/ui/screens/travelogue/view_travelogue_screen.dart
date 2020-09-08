@@ -210,8 +210,8 @@ class _ViewMediaPostScreenState extends State<ViewMediaPostScreen> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Icon(Icons.keyboard_arrow_up, color: widget.traveloguePost.isReacted ? Theme.of(context).primaryColor : Colors.grey, size: 35,),
-            Text("Upvote", style: TextStyle(color: widget.traveloguePost.isReacted ? Theme.of(context).primaryColor : Colors.grey,fontSize: 17),)
+            Icon(widget.traveloguePost.isReacted?Icons.favorite:Icons.favorite_border, color: widget.traveloguePost.isReacted ? Theme.of(context).primaryColor : Colors.grey, size: 35,),
+            Text("${widget.traveloguePost.reacts}", style: TextStyle(color: widget.traveloguePost.isReacted ? Theme.of(context).primaryColor : Colors.grey,fontSize: 17),)
           ],
         ),
       ),
@@ -225,9 +225,9 @@ class _ViewMediaPostScreenState extends State<ViewMediaPostScreen> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Icon(Icons.share, color: Colors.grey, size: 25),
+            Icon(Icons.share, color: Colors.transparent, size: 25),
             SizedBox(width: 5,),
-            Text("Share", style: TextStyle(color: Colors.grey,fontSize: 17),)
+            Text("Share", style: TextStyle(color: Colors.transparent,fontSize: 17),)
           ],
         ),
       ),
@@ -250,17 +250,21 @@ class _ViewMediaPostScreenState extends State<ViewMediaPostScreen> {
               child: Container(
                 height: double.infinity,
                 width: double.infinity,
-                child: Center(
-                  child: CachedNetworkImage(
-                    imageUrl:widget.traveloguePost.images[0],
-                    width: double.infinity,
-                    placeholder: (context, url) => CircularProgressIndicator(),
-                    errorWidget: (context, url, error) => Icon(
-                      Icons.error,
-                      color: Colors.red,
-                    ),
-                  ),
-                ),
+                child: PageView(
+                  children: widget.traveloguePost.images.map((imageUrl) =>
+                      Center(
+                        child: CachedNetworkImage(
+                          imageUrl:imageUrl,
+                          width: double.infinity,
+                          placeholder: (context, url) => CircularProgressIndicator(),
+                          errorWidget: (context, url, error) => Icon(
+                            Icons.error,
+                            color: Colors.red,
+                          ),
+                        ),
+                      )
+                  ).toList()
+                )
               ),
             ),
           ),

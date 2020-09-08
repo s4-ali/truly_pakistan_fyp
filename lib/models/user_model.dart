@@ -31,7 +31,7 @@ class UserModel{
     return map;
   }
 
-  HashMap<String,dynamic> toMap() {
+  HashMap<String,dynamic> tomMap() {
     HashMap<String,dynamic> map=HashMap();
     map["bio"]=bio;
     map["city"]=city;
@@ -65,7 +65,10 @@ class UserModel{
     facebookURL=map["facebookURL"];
     gender=map["gender"];
     phoneNumber=map["phoneNumber"];
-    imageUrl=map["profilePicture"];
+    if(map["profilePicture"] != null)
+      imageUrl=map["profilePicture"];
+    if(map["imageUrl"] != null)
+      imageUrl=map["imageUrl"];
     imageUrlCover=map["coverPicture"];
     name=map["name"];
     state=map["state"];

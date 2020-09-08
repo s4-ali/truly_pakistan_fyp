@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:provider/provider.dart';
 import 'package:truly_pakistan_fyp/models/travelogue/travelogue_post_model.dart';
 import 'package:truly_pakistan_fyp/models/user_model.dart';
 import 'package:truly_pakistan_fyp/providers/travelogue/travelogue_provider.dart';
-import 'package:truly_pakistan_fyp/ui/screens/travelogue/add_travelogue_screen.dart';
 import 'package:truly_pakistan_fyp/ui/widgets/travelogue_post_widget.dart';
 
 class UsersTravelogueScreen extends StatefulWidget {
@@ -32,6 +30,7 @@ class _UsersTravelogueScreenState extends State<UsersTravelogueScreen> {
         title: Text("${widget.user.name}'s Travelogues",style: TextStyle(color: Theme.of(context).primaryColor),),
         backgroundColor: Theme.of(context).canvasColor,
         elevation: 0,
+        iconTheme: Theme.of(context).iconTheme,
         centerTitle: true,
       ),
       body: _travelogues==null?Center(child: CircularProgressIndicator(),)

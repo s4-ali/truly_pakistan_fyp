@@ -22,12 +22,12 @@ class TravelogueSearchResultWidget extends StatelessWidget {
         if(result.connectionState==ConnectionState.active) {
           var doc = result.data as DocumentSnapshot;
           travelogues=extractTravelogues(doc.data());
-          return ListView.builder(
+          return travelogues.length>0?ListView.builder(
             itemCount: travelogues.length,
             itemBuilder: (_,index){
               return TraveloguePostWidget(travelogues[index]);
             },
-          );
+          ):Center(child: Text("No travelogues found"),);
         }else{
           return Center(
             child: CircularProgressIndicator(),
@@ -46,4 +46,5 @@ class TravelogueSearchResultWidget extends StatelessWidget {
     }
     return travelogues;
   }
+
 }

@@ -25,6 +25,7 @@ class UserProvider extends ChangeNotifier{
   }
 
   Future<String> updateName(String text) async{
+    FirebaseAuth.instance.currentUser.updateProfile(displayName: text);
     var info={"name":text};
     _userModel.name=text;
     notifyListeners();
@@ -46,6 +47,7 @@ class UserProvider extends ChangeNotifier{
   }
 
   Future<String> updateProfilePicture(String url)async {
+    FirebaseAuth.instance.currentUser.updateProfile(photoURL: url);
     var info={"profilePicture":url};
     _userModel.imageUrl=url;
     notifyListeners();
@@ -111,6 +113,41 @@ class UserProvider extends ChangeNotifier{
       users.add(UserModel().fromMap(doc.data()));
     }
     return users;
+  }
+
+  Future<String> updateCountry(String text) async {
+    var info={"country":text};
+    _userModel.country=text;
+    notifyListeners();
+    return await _userRepository.updateUserInfo(info, _userModel.uid);
+  }
+
+  Future<String> updateState(String text) async{
+    var info={"state":text};
+    _userModel.state=text;
+    notifyListeners();
+    return await _userRepository.updateUserInfo(info, _userModel.uid);
+  }
+
+  Future<String> updateCity(String text) async{
+    var info={"city":text};
+    _userModel.city=text;
+    notifyListeners();
+    return await _userRepository.updateUserInfo(info, _userModel.uid);
+  }
+
+  Future<String> updateFacebookUrl(String text) async{
+    var info={"facebookURL":text};
+    _userModel.facebookURL=text;
+    notifyListeners();
+    return await _userRepository.updateUserInfo(info, _userModel.uid);
+  }
+
+  Future<String> updateTwitter(String text) async{
+    var info={"twitterURL":text};
+    _userModel.twitterURL=text;
+    notifyListeners();
+    return await _userRepository.updateUserInfo(info, _userModel.uid);
   }
 
 }

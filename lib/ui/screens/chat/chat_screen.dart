@@ -41,7 +41,7 @@ class _ChatScreenState extends State<ChatScreen> {
           child: new Column(
             children: <Widget>[
               new Flexible(
-                child: new FirestoreAnimatedList(
+                child: FirestoreAnimatedList(
                   query: messagesReference.orderBy('postedAt',descending: true),
                   padding: const EdgeInsets.all(8.0),
                   reverse: true,
@@ -139,7 +139,7 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   void _sendMessage(String messageText) {
-    messagesReference.document().setData({
+    messagesReference.doc().set({
       'text':messageText,
       'postedBy':widget.chatRoom.currentUser.uid,
       'postedAt':FieldValue.serverTimestamp(),

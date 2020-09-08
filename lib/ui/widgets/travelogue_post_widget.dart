@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:provider/provider.dart';
@@ -8,6 +9,8 @@ import 'package:truly_pakistan_fyp/providers/travelogue/travelogue_provider.dart
 import 'package:truly_pakistan_fyp/providers/user/user_provider.dart';
 import 'package:truly_pakistan_fyp/ui/screens/profile_screen.dart';
 import 'package:truly_pakistan_fyp/ui/screens/travelogue/view_travelogue_screen.dart';
+import 'package:truly_pakistan_fyp/ui/widgets/multi_image_widget.dart';
+import 'package:truly_pakistan_fyp/utils.dart';
 
 class TraveloguePostWidget extends StatefulWidget {
 
@@ -30,6 +33,7 @@ class _TraveloguePostWidgetState extends State<TraveloguePostWidget> {
   }
 
   Widget _getUserSection() {
+    print("User:${widget.traveloguePost.user.toString()}");
     return Container(
       margin: EdgeInsets.only(left: 16.0, right: 16.0,),
       child: Row(
@@ -40,7 +44,9 @@ class _TraveloguePostWidgetState extends State<TraveloguePostWidget> {
             children: <Widget>[
               ClipRRect(
                 borderRadius: BorderRadius.circular(50),
-                child: (widget.traveloguePost.user.imageUrl!=null
+                child: (
+                    widget.traveloguePost.user!=null&&
+                    widget.traveloguePost.user.imageUrl!=null
                     &&widget.traveloguePost.user.imageUrl.isNotEmpty) ?
                 CachedNetworkImage(
                   imageUrl: widget.traveloguePost.user.imageUrl,
@@ -61,7 +67,7 @@ class _TraveloguePostWidgetState extends State<TraveloguePostWidget> {
                         pushNewScreen(context, screen: ProfileScreen(user: user,),withNavBar: false);
                       },
                       child: Text(
-                        widget.traveloguePost.user.name,
+                        widget.traveloguePost.user==null?"NA":widget.traveloguePost.user.name??"NA",
                         style: Theme.of(context).textTheme.headline6,
                       ),
                     ),
@@ -71,7 +77,24 @@ class _TraveloguePostWidgetState extends State<TraveloguePostWidget> {
               ),
             ],
           ),
-          Icon(Icons.more_vert)
+          IconButton(
+            onPressed: (){
+              var options=[""];
+              if(FirebaseAuth.instance.currentUser.uid
+                  == widget.traveloguePost.user.uid)
+                options=["Edit","Delete"];
+              else
+                options=["Report","Save"];
+              showCustomDialog(context, "Options", options,(index){
+                if(FirebaseAuth.instance.currentUser.uid
+                    == widget.traveloguePost.user.uid)
+                  print("Delete");
+                else
+                  print("Report");
+              });
+            },
+            icon:Icon(Icons.more_vert),
+          ),
         ],
       ),
     );
@@ -123,7 +146,7 @@ class _TraveloguePostWidgetState extends State<TraveloguePostWidget> {
                     Text("${widget.traveloguePost.totalComments??0}"),
                   ],
                 ),
-                Icon(Icons.share),
+                Icon(Icons.share,color: Colors.transparent,),
               ],
             ),
           ),
@@ -152,7 +175,7 @@ class _TraveloguePostWidgetState extends State<TraveloguePostWidget> {
   }
 
   Widget _getMultiMediaView() {
-    return _getSingleMediaView();
+    return MultiImageWidget(images: widget.traveloguePost.images,);
   }
 
   @override
@@ -160,7 +183,7 @@ class _TraveloguePostWidgetState extends State<TraveloguePostWidget> {
     return Container(
       margin: EdgeInsets.only(bottom: 16),
       decoration: BoxDecoration(
-        color: Theme.of(context).backgroundColor,
+        color: Theme.of(context).cardColor,
         boxShadow: [BoxShadow(color: Colors.black12,blurRadius: 3,offset: Offset(0,3))]
       ),
       child: Column(
@@ -176,6 +199,7 @@ class _TraveloguePostWidgetState extends State<TraveloguePostWidget> {
             &&widget.traveloguePost.description.isNotEmpty)
             GestureDetector(
               onTap: (){
+                if(widget.traveloguePost.images!=null&&widget.traveloguePost.images.isNotEmpty)
                 pushNewScreen(context, screen: ViewMediaPostScreen(widget.traveloguePost),withNavBar: false);
               },
               child: _getTextSection(),

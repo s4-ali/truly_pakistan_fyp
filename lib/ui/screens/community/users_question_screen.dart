@@ -35,6 +35,7 @@ class _UsersQuestionScreenState extends State<UsersQuestionScreen> {
         title: Text("${widget.user.name}'s Travelogues",style: TextStyle(color: Theme.of(context).primaryColor),),
         backgroundColor: Theme.of(context).canvasColor,
         elevation: 0,
+        iconTheme: Theme.of(context).iconTheme,
         centerTitle: true,
       ),
       body: _questions==null?Center(child: CircularProgressIndicator(),)

@@ -40,7 +40,7 @@ class _MarketPlaceState extends State<MarketPlace> {
     AppBar appBar=AppBar(
       title: Text("MarketPlace"),
       centerTitle: true,
-      backgroundColor:Color(0xFF008736),
+      backgroundColor:Theme.of(context).primaryColor,
       actions: <Widget>[
         IconButton(
           onPressed: (){
@@ -54,7 +54,7 @@ class _MarketPlaceState extends State<MarketPlace> {
     );
 
     return Scaffold(
-      backgroundColor: Color(0xffffffff),
+//      backgroundColor: Color(0xffffffff),
 //      backgroundColor: Color(0xffe8e8e8),
 //      appBar: appBar,
       body: CustomScrollView(
@@ -91,7 +91,7 @@ class _MarketPlaceState extends State<MarketPlace> {
                     padding: const EdgeInsets.only(left:20.0,top: 8,bottom: 16),
                     child: Text("All Items",
                         style: TextStyle(
-                          color: Color(0xff008736),
+                          color: Theme.of(context).primaryColor,
                           fontSize: 38.0,
                           fontFamily: "Calibre-Semibold",
                           letterSpacing: 1.0,
@@ -119,7 +119,7 @@ class _MarketPlaceState extends State<MarketPlace> {
                                 Container(
                                   decoration: BoxDecoration(
                                     boxShadow: [BoxShadow(color: Colors.black12, offset: Offset(0,-4),blurRadius: 3)],
-                                    color: Color(0xfffbfbfb),
+                                    color: Theme.of(context).cardColor,
                                     border: Border.all(color: Colors.black12,width: 1),
                                     borderRadius: BorderRadius.only(bottomRight: Radius.circular(8),bottomLeft: Radius.circular(8)),
                                   ),
@@ -132,17 +132,16 @@ class _MarketPlaceState extends State<MarketPlace> {
                                       Text(
                                         widget.pageModel.adsList[position].title,
                                         style: TextStyle(
-                                          color: Colors.black,
                                           fontSize: 13,
                                           fontWeight: FontWeight.w400,
                                         ),
                                       ),
                                       Align(
                                         alignment: Alignment.bottomRight,
-                                        child: Text(widget.pageModel.adsList[position].title.toString(),
+                                        child: Text(widget.pageModel.adsList[position].price.toString(),
                                           style: TextStyle(
                                               fontSize: 18,
-                                              color: Color(0xff008736)
+                                              color: Theme.of(context).primaryColor,
                                           ),
                                         ),
                                       ),

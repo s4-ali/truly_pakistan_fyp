@@ -26,7 +26,7 @@ class ProductSearchResultWidget extends StatelessWidget {
         if(result.connectionState==ConnectionState.active) {
           var doc = result.data as DocumentSnapshot;
           products=extractProducts(doc.data());
-          return ListView.builder(
+          return products.length>0?ListView.builder(
             itemCount: products.length,
             scrollDirection: Axis.vertical,
             itemBuilder: (_,index){
@@ -37,7 +37,13 @@ class ProductSearchResultWidget extends StatelessWidget {
                   borderRadius: BorderRadius.circular(8.0),
                   child: Column(
                     children: <Widget>[
-                      CachedNetworkImage(
+                      products[index].images==null||products[index].images.isEmpty?Container(
+                        width: MediaQuery.of(context).size.width,
+                        height:MediaQuery.of(context).size.width-32,
+                        child: Center(
+                          child: CircularProgressIndicator(),
+                        ),
+                      ):CachedNetworkImage(
                         imageUrl: products[index].images[0],
                         width: MediaQuery.of(context).size.width,
                         height:MediaQuery.of(context).size.width-32,
@@ -60,7 +66,6 @@ class ProductSearchResultWidget extends StatelessWidget {
                                 Text(
                                   products[index].title,
                                   style: TextStyle(
-                                    color: Colors.white,
                                     fontSize: 13,
                                     fontWeight: FontWeight.w400,
                                   ),
@@ -86,7 +91,7 @@ class ProductSearchResultWidget extends StatelessWidget {
                 ),
               );
             },
-          );
+          ):Center(child: Text("No travelogues found"),);
         }else{
           return Center(
             child: CircularProgressIndicator(),

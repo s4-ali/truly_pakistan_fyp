@@ -13,7 +13,7 @@ class ThemeProvider with ChangeNotifier {
       canvasColor: Color(0xFFF6F6F6),
       backgroundColor: Colors.white,
       bottomSheetTheme: BottomSheetThemeData(
-        backgroundColor: Colors.transparent
+        backgroundColor: Colors.transparent,
       )
     ),
     ThemeData(
@@ -21,13 +21,14 @@ class ThemeProvider with ChangeNotifier {
         primaryColor: Color(0xFF1BA874),
         accentColor: Color(0xFF474747),
         bottomSheetTheme: BottomSheetThemeData(
-            backgroundColor: Colors.transparent
-        )
+            backgroundColor: Colors.transparent,
+        ),
+
     ),
   ];
 
   AppTheme _currentTheme = AppTheme.DARK;
-  ThemeData _currentThemeData = themeData[1];
+  ThemeData _currentThemeData = themeData[0];
 
   void switchTheme() => currentTheme == AppTheme.LIGHT
       ? currentTheme = AppTheme.DARK
@@ -37,7 +38,7 @@ class ThemeProvider with ChangeNotifier {
     if (theme != null) {
       _currentTheme = theme;
       _currentThemeData =
-      currentTheme == AppTheme.LIGHT ? themeData[0] : themeData[1];
+        currentTheme == AppTheme.LIGHT ? themeData[0] : themeData[1];
       notifyListeners();
     }
   }

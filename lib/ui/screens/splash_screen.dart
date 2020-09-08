@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:truly_pakistan_fyp/core/authentication.dart';
@@ -102,7 +103,9 @@ class _SplashScreenState extends State<SplashScreen> {
           try {
             await authService.signInWithEmailAndPassword(s.name, s.password);
             startHomeScreen(authService.currentUser().uid);
-          } on Exception catch(e){
+          } on PlatformException catch(e){
+            return e.message;
+          } on Exception catch(e) {
             return e.toString();
           }
           return null;
@@ -111,7 +114,9 @@ class _SplashScreenState extends State<SplashScreen> {
           try{
             await authService.createUserWithEmailAndPassword(s.name, s.password, "Asfar");
             startHomeScreen(authService.currentUser().uid);
-          }on Exception catch(e){
+          } on PlatformException catch(e){
+            return e.message;
+          } on Exception catch(e) {
             return e.toString();
           }
           return null;
@@ -119,8 +124,9 @@ class _SplashScreenState extends State<SplashScreen> {
         onRecoverPassword: (s)async{
           try {
             await authService.resetPassword(s);
-          } on Exception catch(e){
-            print(e);
+          } on PlatformException catch(e){
+            return e.message;
+          } on Exception catch(e) {
             return e.toString();
           }
           return null;

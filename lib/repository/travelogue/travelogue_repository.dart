@@ -72,4 +72,13 @@ class TravelogueRepository {
     );
   }
 
+  Future<DocumentSnapshot> getTraveloguePostsById(String docId) async{
+    return FirebaseFirestore.instance
+        .collection("Travelogue")
+        .doc(docId)
+        .get()
+        .then(
+            (value) => value);
+  }
+
 }

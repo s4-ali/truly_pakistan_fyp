@@ -10,8 +10,10 @@ import 'package:truly_pakistan_fyp/models/user_model.dart';
 import 'package:truly_pakistan_fyp/providers/community/community_provider.dart';
 import 'package:truly_pakistan_fyp/providers/user/user_provider.dart';
 import 'package:truly_pakistan_fyp/static_data.dart';
+import 'package:truly_pakistan_fyp/ui/screens/imageviewer_screen.dart';
 import 'package:truly_pakistan_fyp/ui/screens/marketplace/data.dart';
 import 'package:truly_pakistan_fyp/ui/screens/profile_screen.dart';
+import 'package:truly_pakistan_fyp/ui/widgets/multi_image_widget.dart';
 
 class ViewCommunityPostScreen extends StatefulWidget {
   final CommunityPostModel communityPostModel;
@@ -109,29 +111,43 @@ class _ViewCommunityPostScreenState extends State<ViewCommunityPostScreen> {
   }
 
   Widget _getSingleMediaView() {
-    return Container(
-      margin: EdgeInsets.only(top: 8.0, left: 16.0, right: 16.0),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        boxShadow: [
-          BoxShadow(
-              color: Colors.black.withAlpha(35),
-              blurRadius: 6,
-              offset: Offset(2, 6),
-              spreadRadius: 0)
-        ],
-      ),
-      child: ClipRRect(
+    return GestureDetector(
+      onTap: (){
+        pushNewScreen(context, screen: ImageViewerScreen(widget.communityPostModel.images));
+      },
+      child: Container(
+        margin: EdgeInsets.only(top: 8.0, left: 16.0, right: 16.0),
+        decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
-          child: CachedNetworkImage(
-            imageUrl: widget.communityPostModel.images[0],
-            width: double.infinity,
-            placeholder: (context, url) => CircularProgressIndicator(),
-            errorWidget: (context, url, error) => Icon(
-              Icons.error,
-              color: Colors.red,
-            ),
-          )),
+          boxShadow: [
+            BoxShadow(
+                color: Colors.black.withAlpha(35),
+                blurRadius: 6,
+                offset: Offset(2, 6),
+                spreadRadius: 0)
+          ],
+        ),
+        child: ClipRRect(
+            borderRadius: BorderRadius.circular(10),
+            child: CachedNetworkImage(
+              imageUrl: widget.communityPostModel.images[0],
+              width: double.infinity,
+              placeholder: (context, url) => CircularProgressIndicator(),
+              errorWidget: (context, url, error) => Icon(
+                Icons.error,
+                color: Colors.red,
+              ),
+            )),
+      ),
+    );
+  }
+
+  Widget _getMultiMediaView() {
+    return GestureDetector(
+      onTap: (){
+        pushNewScreen(context, screen: ImageViewerScreen(widget.communityPostModel.images));
+      },
+      child: MultiImageWidget(images: widget.communityPostModel.images,),
     );
   }
 
@@ -194,7 +210,9 @@ class _ViewCommunityPostScreenState extends State<ViewCommunityPostScreen> {
                 ),
                 if (widget.communityPostModel.images != null &&
                     widget.communityPostModel.images.length != 0)
-                  _getSingleMediaView(),
+                  widget.communityPostModel.images.length==1?
+                    _getSingleMediaView()
+                    :_getMultiMediaView(),
                 Padding(
                   padding:
                       EdgeInsets.only(left: 16, right: 16, top: 8, bottom: 8),
@@ -268,14 +286,13 @@ class _ViewCommunityPostScreenState extends State<ViewCommunityPostScreen> {
                                   ? Theme.of(context).primaryColor
                                   : Theme.of(context).iconTheme.color),
                           iconSize: 30,
-                          color: theme.primaryColor,
                         ),
                       ],
                     ),
                     Padding(
                       padding: const EdgeInsets.only(right: 16.0),
-                      child: Text("Share"),
-                    )
+                      child: Text("Share",style: TextStyle(color: Colors.transparent),),
+                    ),
                   ],
                 )
               ],
@@ -348,22 +365,80 @@ class _ViewCommunityPostScreenState extends State<ViewCommunityPostScreen> {
                         SizedBox(
                           height: 16,
                         ),
+
                         IconButton(
-                          onPressed: () {},
-                          icon: Icon(Icons.arrow_upward),
+                          onPressed: () {
+                            setState(() {
+                              if (answer.currentVote == 0) {
+                                answer.currentVote = 1;
+                                answer.upVotes++;
+                              } else if (answer.currentVote <
+                                  0) {
+                                answer.upVotes++;
+                                answer.downVotes--;
+                                answer.currentVote = 1;
+                              } else {
+                                answer.upVotes--;
+                                answer.currentVote = 0;
+                              }
+                            });
+                            var communityProvider=Provider.of<CommunityProvider>(context,
+                                listen: false);
+                            if(answer.currentVote==0)
+                              communityProvider.removeVoteTo(
+                                widget.communityPostModel,
+                                answer: answer,
+                              );
+                            else
+                              communityProvider
+                                .addUpVoteTo(widget.communityPostModel,answer:answer);
+                          },
+                          icon: Icon(
+                            Icons.arrow_upward,
+                            color: answer.currentVote > 0
+                                ? Theme.of(context).primaryColor
+                                : Theme.of(context).iconTheme.color,
+                          ),
                           iconSize: 30,
                           color: theme.primaryColor,
                         ),
                         Text(
-                          "${answer.votes}",
+                          "${answer.upVotes-answer.downVotes}",
                           style: TextStyle(
                               fontSize: 16, color: theme.primaryColor),
                         ),
+
                         IconButton(
-                          onPressed: () {},
-                          icon: Icon(Icons.arrow_downward),
+                          onPressed: () {
+                            setState(() {
+                              if (answer.currentVote == 0) {
+                                answer.currentVote = -1;
+                                answer.downVotes++;
+                              } else if (answer.currentVote >
+                                  0) {
+                                answer.currentVote = -1;
+                                answer.downVotes++;
+                                answer.upVotes--;
+                              } else {
+                                answer.downVotes--;
+                                answer.currentVote = 0;
+                              }
+                            });
+                            var communityProvider=Provider.of<CommunityProvider>(context,
+                                listen: false);
+                            if(answer.currentVote==0)
+                              communityProvider.removeVoteTo(
+                                widget.communityPostModel,
+                                answer: answer,
+                              );
+                            else
+                              communityProvider.addDownVoteTo(widget.communityPostModel,answer: answer);
+                          },
+                          icon: Icon(Icons.arrow_downward,
+                              color: answer.currentVote < 0
+                                  ? Theme.of(context).primaryColor
+                                  : Theme.of(context).iconTheme.color),
                           iconSize: 30,
-                          color: theme.primaryColor,
                         ),
                       ],
                     ),

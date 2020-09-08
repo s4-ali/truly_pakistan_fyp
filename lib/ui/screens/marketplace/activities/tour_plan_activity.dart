@@ -1,23 +1,23 @@
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
+import 'package:truly_pakistan_fyp/models/marketplace/marketplace_item_model.dart';
+import 'package:truly_pakistan_fyp/ui/screens/imageviewer_screen.dart';
+import 'package:truly_pakistan_fyp/ui/screens/marketplace/activities/checkout_activity.dart';
 import 'package:truly_pakistan_fyp/ui/screens/marketplace/widgets/timeline_widget.dart';
-import '../data.dart';
-import 'checkout_activity.dart';
 
 class TourPlanActivity extends StatelessWidget {
 
-  final String position;
-  final String path;
+  final MarketPlaceItemModel product;
 
-  const TourPlanActivity({Key key, this.position, this.path}) : super(key: key);
+  const TourPlanActivity(this.product,{Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     double screenWidth=MediaQuery.of(context).size.width;
     double screenHeight=MediaQuery.of(context).size.height;
-    String description="Hunza, the valley of dreams where the cherry blossom trees put on a spectacular show in summer, and the frost-covered mountains and icy Attabad Lake create a scene straight out of a snow globe in winter, is located in the Gilgit-Pakistan region of Pakistan. A week in the majestic Karakoram mountain ranges is enough to transform you. It offers something for everyone.";
-    String recommendedGear="Water bottle\nGloves (highly recommended)\nMuffler (highly recommended)\nBeanie (highly recommended)\nHand wash/soap/sanitizer, wipes, tooth paste and all other necessities\nSun Block and Sun glasses";
     return Scaffold(
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -28,11 +28,17 @@ class TourPlanActivity extends StatelessWidget {
             child: Stack(
               children: <Widget>[
                 Hero(
-                  tag:"xxx",
-                  child: Image.network(path,
-                    width: screenWidth,
-                    height: screenWidth-(screenWidth/4),
-                    fit: BoxFit.cover,
+                  tag:product.images[0],
+                  child: GestureDetector(
+                    onTap: (){
+                      pushNewScreen(context, screen: ImageViewerScreen(product.images),withNavBar: false);
+                    },
+                    child: CachedNetworkImage(
+                      imageUrl: product.images[0],
+                      width: screenWidth,
+                      height: screenWidth-(screenWidth/4),
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
                 Align(
@@ -42,7 +48,7 @@ class TourPlanActivity extends StatelessWidget {
                     color: Color(0x55000000),
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: Text("Malam Jabba 2 Days Trip",
+                      child: Text(product.title,
                         style: TextStyle(color: Colors.white,fontSize: 18,fontWeight: FontWeight.w600),
                       ),
                     ),
@@ -75,7 +81,7 @@ class TourPlanActivity extends StatelessWidget {
           Container(
             width: screenWidth,
             height: screenHeight-screenWidth+(screenWidth/4),
-            color: Color(0xFFEEEEEE),
+            color: Theme.of(context).canvasColor,
             child: ListView(
               scrollDirection: Axis.vertical,
               padding: EdgeInsets.all(0),
@@ -86,14 +92,10 @@ class TourPlanActivity extends StatelessWidget {
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
-                      Text("12,000 Rs",style: TextStyle(color: Color(0xFF008B6A),fontSize: 20,fontWeight: FontWeight.w600),),
+                      Text("${product.price} Rs",style: TextStyle(color: Color(0xFF008B6A),fontSize: 20,fontWeight: FontWeight.w600),),
                       RaisedButton(
                         onPressed:(){
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (_)=>CheckoutActivity(position: "1",path: path,),
-                            ),
-                          );
+                          pushNewScreen(context, screen: CheckoutActivity(product),withNavBar: false);
                         },
                         child: Text("Book Now",style: TextStyle(fontSize: 18),),
                         shape: RoundedRectangleBorder(
@@ -107,7 +109,7 @@ class TourPlanActivity extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  color: Colors.white,
+                  color: Theme.of(context).cardColor,
                   padding: EdgeInsets.symmetric(vertical: 16.0,horizontal: 16.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -115,70 +117,53 @@ class TourPlanActivity extends StatelessWidget {
                       Text("Description", style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
                       Padding(
                         padding: const EdgeInsets.only(top:8.0),
-                        child: Text(description),
+                        child: Text(product.description),
                       )
                     ],
                   ),
                 ),
                 Container(
-                  color: Colors.white,
+                  color: Theme.of(context).cardColor,
                   padding: EdgeInsets.symmetric(vertical: 16.0,horizontal: 16.0),
                   margin: EdgeInsets.only(top: 16.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Text("Recommended Gear", style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
-                      Padding(
-                        padding: const EdgeInsets.only(top:8.0),
-                        child: Text(recommendedGear),
-                      )
-                    ],
-                  ),
-                ),
-                Container(
-                  color: Colors.white,
-                  padding: EdgeInsets.symmetric(vertical: 16.0,horizontal: 16.0),
-                  margin: EdgeInsets.only(top: 16.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text("Facilities", style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
-                      Padding(
-                        padding: const EdgeInsets.only(top:8.0),
-                        child: Text("Services",style: TextStyle(fontSize: 18,fontWeight: FontWeight.w600),),
-                      ),
-                      Row(
-                        children: <Widget>[
-                          bubbleBox("Accommodation (3-4 persons sharing)")
-                        ],
-                      ),Padding(
+                      if(product.activities!=null)Padding(
                         padding: const EdgeInsets.only(top:8.0),
                         child: Text("Activities",style: TextStyle(fontSize: 18,fontWeight: FontWeight.w600),),
                       ),
-                      Row(
-                        children: <Widget>[
-                          bubbleBox("Accommodation (3-4 persons sharing)")
-                        ],
+                      if(product.activities!=null)Wrap(
+                        direction: Axis.horizontal,
+                        children: product.activities.map((e) => Padding(
+                          padding: const EdgeInsets.only(right:8.0),
+                          child: bubbleBox(e, context),
+                        )).toList(),
+                      ),
+                      if(product.activities!=null)Padding(
+                        padding: const EdgeInsets.only(top:8.0),
+                        child: Text("Services",style: TextStyle(fontSize: 18,fontWeight: FontWeight.w600),),
+                      ),
+                      if(product.activities!=null)Wrap(
+                        direction: Axis.horizontal,
+                        children: product.servicesAvailable.map((e) => Padding(
+                          padding: const EdgeInsets.only(right:8.0),
+                          child: bubbleBox(e, context),
+                        )).toList(),
                       ),
                     ],
                   ),
                 ),
-                Container(
+                if(product.activities!=null)Container(
                   margin: EdgeInsets.only(top: 16.0),
-                  color: Colors.white,
+                  color: Theme.of(context).cardColor,
                   child: Timeline(
-                    children: <Widget>[
-                      Container(height: 100, color: Color(0xFFeeeeee),),
-                      Container(height: 50, color: Color(0xFFeeeeee),),
-                      Container(height: 200, color: Color(0xFFeeeeee),),
-                      Container(height: 100, color: Color(0xFFeeeeee),),
-                    ],
-                    indicators: <Widget>[
-                      Icon(Icons.access_alarm),
-                      Icon(Icons.backup),
-                      Icon(Icons.accessibility_new),
-                      Icon(Icons.access_alarm),
-                    ],
+                    children: product.day.map((e) => Container(
+                      color: Colors.black12,
+                      padding: EdgeInsets.all(16),
+                      child: Text(e),
+                    )).toList(),
+                    indicators: product.day.map((e) => Text("Day ${product.day.indexOf(e)+1}")).toList(),
                   ),
                 ),
               ],
@@ -189,11 +174,11 @@ class TourPlanActivity extends StatelessWidget {
     );
   }
 
-  Widget bubbleBox(String text){
+  Widget bubbleBox(String text,BuildContext context){
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16.0),
-        color: Color(0xFFEEEEEE),
+        color: Colors.black12,
       ),
       padding: EdgeInsets.symmetric(vertical: 4.0,horizontal: 16.0),
       child: Text(text),

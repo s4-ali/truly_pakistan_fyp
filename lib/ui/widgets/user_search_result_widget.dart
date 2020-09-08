@@ -26,12 +26,12 @@ class UserSearchResultWidget extends StatelessWidget {
         if(result.connectionState==ConnectionState.active) {
           var doc = result.data as DocumentSnapshot;
           users=extractUsers(doc.data());
-          return ListView.builder(
+          return users.length>0?ListView.builder(
             itemCount: users.length,
             itemBuilder: (_,index){
               return FollowTileWidget(user:users[index]);
             },
-          );
+          ):Center(child: Text("No travelogues found"),);
         }else{
           return Center(
             child: CircularProgressIndicator(),

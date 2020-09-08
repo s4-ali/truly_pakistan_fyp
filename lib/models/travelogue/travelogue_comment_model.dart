@@ -23,7 +23,7 @@ class TravelogueCommentModel{
     var map=HashMap<String,dynamic>();
     map["text"]=this.text;
     map["postedAt"]=this.postedAt;
-    map["user"]=user.toMap();
+    map["user"]=user.toMapBasic();
     return map;
   }
 }

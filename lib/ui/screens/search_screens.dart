@@ -83,16 +83,11 @@ class _SearchScreenState extends State<SearchScreen> {
               },
               icon: Icon(Icons.search,color: getTextColor(context),),
             ),
-            IconButton(
-              onPressed: (){
-              },
-              icon: Icon(Icons.history,color: getTextColor(context),),
-            ),
           ]:null,
           bottom: PreferredSize(
             preferredSize: Size(double.infinity,60),
             child: TabBar(
-              labelColor: Theme.of(context).canvasColor,
+              labelColor: Theme.of(context).primaryColor,
               unselectedLabelColor: Theme.of(context).textTheme.bodyText1.color,
               indicatorSize: TabBarIndicatorSize.tab,
               isScrollable: true,
@@ -101,7 +96,7 @@ class _SearchScreenState extends State<SearchScreen> {
                   topLeft: Radius.circular(12),
                   topRight: Radius.circular(12),
                 ),
-                color: Theme.of(context).primaryColor,
+                color: Theme.of(context).canvasColor,
               ),
               tabs: <Widget>[
                 Padding(

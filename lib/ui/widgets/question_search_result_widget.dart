@@ -24,12 +24,12 @@ class QuestionSearchResultWidget extends StatelessWidget {
         if(result.connectionState==ConnectionState.active) {
           var doc = result.data as DocumentSnapshot;
           questions=extractQuestions(doc.data());
-          return ListView.builder(
+          return questions.length>0?ListView.builder(
             itemCount: questions.length,
             itemBuilder: (_,index){
               return CommunityPostWidget(questions[index]);
             },
-          );
+          ):Center(child: Text("No travelogues found"),);
         }else{
           return Center(
             child: CircularProgressIndicator(),

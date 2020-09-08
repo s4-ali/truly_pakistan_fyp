@@ -1,6 +1,8 @@
 import 'dart:collection';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:truly_pakistan_fyp/models/community/community_answer_model.dart';
+import 'package:truly_pakistan_fyp/utils.dart';
 
 import '../user_model.dart';
 
@@ -17,7 +19,7 @@ class CommunityPostModel{
   List<String> locations;
   List<String> images;
   List<CommunityAnswerModel> answers;
-  String timeElapsed="1 minute ago";
+  String timeElapsed="";
   String id;
   int currentVote=0;
 
@@ -36,8 +38,10 @@ class CommunityPostModel{
       totalVotes=map["totalVotes"];
     if(map["totalAnswers"]!=null && map["totalAnswers"] is int)
       totalAnswers=map["totalAnswers"];
-    if(map["postedAt"]!=null && map["postedAt"] is DateTime)
-      postedAt=map["postedAt"];
+    if(map["postedAt"]!=null && map["postedAt"] is Timestamp) {
+      postedAt = (map["postedAt"] as Timestamp).toDate();
+      timeElapsed=toDuration(DateTime.now().difference(postedAt).inMilliseconds);
+    }
     if(map["user"]!=null && map["user"] is Map<dynamic,dynamic>)
       user=UserModel().fromMap(map["user"]);
     if(map["tags"]!=null) {

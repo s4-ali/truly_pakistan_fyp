@@ -87,4 +87,9 @@ class TravelogueProvider extends ChangeNotifier{
     return travelogues;
   }
 
+  Future<TraveloguePostModel> getTravelogueById(String docId)async {
+    DocumentSnapshot doc=await _travelogueRepository.getTraveloguePostsById(docId);
+    return TraveloguePostModel().fromMap(doc.data())..id=docId;
+  }
+
 }

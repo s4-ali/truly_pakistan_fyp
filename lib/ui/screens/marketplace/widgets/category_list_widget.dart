@@ -1,10 +1,12 @@
 import 'dart:math';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:truly_pakistan_fyp/models/marketplace/marketplace_item_model.dart';
 import 'package:truly_pakistan_fyp/ui/screens/marketplace/activities/tour_plan_activity.dart';
+import 'package:truly_pakistan_fyp/ui/screens/marketplace/models/page_model.dart';
 
 import '../data.dart';
 import '../main.dart';
@@ -33,7 +35,7 @@ class CategoryListWidget extends StatelessWidget {
             children: <Widget>[
               Text(categoryTitle,
                   style: TextStyle(
-                    color: Color(0xff008736),
+                    color: Theme.of(context).primaryColor,
                     fontSize: 38.0,
                     fontFamily: "Calibre-Semibold",
                     letterSpacing: 1.0,
@@ -42,9 +44,10 @@ class CategoryListWidget extends StatelessWidget {
                 icon: Icon(
                   Icons.arrow_forward,
                   size: 24.0,
-                  color: Color(0xff008736),
+                  color: Theme.of(context).primaryColor,
                 ),
                 onPressed: () {
+                  var pageModel=getPageModel(categoryTitle,adsList);
                   Navigator.push(context, MaterialPageRoute(builder: (context)=>MarketPlace(pageModel:null)));
                 },
               )
@@ -61,10 +64,9 @@ class CategoryListWidget extends StatelessWidget {
               return GestureDetector(
                 onTap: (){
                   pushNewScreen(context,
-                      screen: TourPlanActivity(position: "_$categoryTitle$position",path: adsList[position].images[0],),
+                      screen: TourPlanActivity(adsList[position]),
                       withNavBar: false,
-                      customPageRoute: MaterialPageRoute(builder: (_)=>TourPlanActivity(position: "_$categoryTitle$position",path: adsList[position].images[0],)));
-                  print("On Click $position");
+                      customPageRoute: MaterialPageRoute(builder: (_)=>TourPlanActivity(adsList[position])));
                 },
                 child: Padding(
                   padding: EdgeInsets.only(left: 18.0,top: 18.0),
@@ -75,7 +77,8 @@ class CategoryListWidget extends StatelessWidget {
                         children: <Widget>[
                           Hero(
                             tag:"cover_image_$categoryTitle$position",
-                            child: Image.network(adsList[position].images[0],
+                            child: CachedNetworkImage(
+                              imageUrl:adsList[position].images[0],
                                 width: 200.0,height:150,fit: BoxFit.fill,),
                           ),
                           Wrap(
@@ -83,10 +86,9 @@ class CategoryListWidget extends StatelessWidget {
                             children: <Widget>[
                               Container(
                                 decoration: BoxDecoration(
-                                  boxShadow: [BoxShadow(color: Color(0x2F000000), offset: Offset(0,-4))],
-                                  color: Color(0xfffbfbfb),
+                                  boxShadow: [BoxShadow(color: Colors.black12, offset: Offset(0,-3))],
+                                  color: Theme.of(context).cardColor,
                                   borderRadius: BorderRadius.only(bottomRight: Radius.circular(8),bottomLeft: Radius.circular(8)),
-                                  border: Border.all(color: Colors.black12,width: 1)
                                 ),
                                 alignment: Alignment.bottomCenter,
                                 width: 200,
@@ -106,8 +108,8 @@ class CategoryListWidget extends StatelessWidget {
                                       alignment: Alignment.bottomRight,
                                       child: Text(adsList[position].price.toString(),
                                         style: TextStyle(
-                                            fontSize: 18,
-                                            color: Color(0xff008B6A)
+                                          fontSize: 18,
+                                          color: Theme.of(context).primaryColor,
                                         ),
                                       ),
                                     ),
@@ -127,5 +129,10 @@ class CategoryListWidget extends StatelessWidget {
         )
       ],
     );
+  }
+
+  PageModel getPageModel(String categoryTitle, List<MarketPlaceItemModel> adsList) {
+    var model=PageModel();
+    return model;
   }
 }

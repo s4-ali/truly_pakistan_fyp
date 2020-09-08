@@ -60,7 +60,7 @@ class CommunityPostWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 Text("${communityPostModel.totalVotes} votes | ${communityPostModel.totalAnswers} answers"),
-                Text("${communityPostModel.timeElapsed} ")
+                Text("${communityPostModel.timeElapsed} "),
               ],
             ),
           ],

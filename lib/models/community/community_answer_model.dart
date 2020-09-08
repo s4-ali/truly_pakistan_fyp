@@ -1,10 +1,9 @@
 import 'dart:collection';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
-
 import '../user_model.dart';
 
 class CommunityAnswerModel{
+
   String id;
   String text;
   String votes;
@@ -31,7 +30,8 @@ class CommunityAnswerModel{
     map["upVotes"]=this.upVotes;
     map["downVotes"]=this.downVotes;
     map["postedAt"]=this.postedAt;
-    map["user"]=user.toMap();
+    map["user"]=user.toMapBasic();
     return map;
   }
+
 }

@@ -73,4 +73,25 @@ class CommunityRepository {
             (value) => value != null ? value.docs : null
     );
   }
+
+  Future voteOnAnswer(String postId, String answerId, String uid, Map<String, Object> data)async {
+    await FirebaseFirestore.instance
+        .collection("Community")
+        .doc(postId)
+        .collection("Answers")
+        .doc(answerId)
+        .collection("Votes")
+        .doc(uid)
+        .set(data);
+  }
+
+  Future<DocumentSnapshot> getQuestionById(String docId) async{
+    return FirebaseFirestore.instance
+        .collection("Community")
+        .doc(docId)
+        .get()
+        .then(
+            (value) => value
+    );
+  }
 }

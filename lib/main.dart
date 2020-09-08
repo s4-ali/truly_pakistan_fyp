@@ -4,17 +4,13 @@ import 'package:provider/provider.dart';
 import 'package:truly_pakistan_fyp/models/user_model.dart';
 import 'package:truly_pakistan_fyp/providers/chat/chat_provider.dart';
 import 'package:truly_pakistan_fyp/providers/community/community_provider.dart';
+import 'package:truly_pakistan_fyp/providers/marketplace/marketplace_provider.dart';
+import 'package:truly_pakistan_fyp/providers/search/search_provider.dart';
 import 'package:truly_pakistan_fyp/providers/theme_provider.dart';
 import 'package:truly_pakistan_fyp/providers/travelogue/travelogue_provider.dart';
 import 'package:truly_pakistan_fyp/providers/user/user_provider.dart';
-import 'package:truly_pakistan_fyp/static_data.dart';
-import 'package:truly_pakistan_fyp/ui/screens/community/add_community_post_screen.dart';
-import 'package:truly_pakistan_fyp/ui/screens/community/community_screen.dart';
-import 'package:truly_pakistan_fyp/ui/screens/home_screen.dart';
-import 'package:truly_pakistan_fyp/ui/screens/profile/edit_profile_screen.dart';
-import 'package:truly_pakistan_fyp/ui/screens/profile_screen.dart';
-import 'package:truly_pakistan_fyp/ui/screens/settings_screen.dart';
 import 'package:truly_pakistan_fyp/ui/screens/splash_screen.dart';
+import 'package:truly_pakistan_fyp/ui/screens/test_screen.dart';
 
 Future<void> main() async {
   runApp(
@@ -23,11 +19,17 @@ Future<void> main() async {
         ChangeNotifierProvider<ThemeProvider>(
           create: (_) => ThemeProvider(),
         ),
+        ChangeNotifierProvider<SearchProvider>(
+          create: (_) => SearchProvider(),
+        ),
         ChangeNotifierProvider<CommunityProvider>(
           create: (_) => CommunityProvider(),
         ),
         ChangeNotifierProvider<TravelogueProvider>(
           create: (_) => TravelogueProvider(),
+        ),
+        ChangeNotifierProvider<MarketPlaceProvider>(
+          create: (_) => MarketPlaceProvider(),
         ),
         ChangeNotifierProvider<UserProvider>(
           create: (_) => UserProvider(),
@@ -42,6 +44,8 @@ Future<void> main() async {
 }
 
 class MyApp extends StatelessWidget {
+  final bool isTest=false;
+
   Future<void> _initializeDefault() async {
     FirebaseApp app = await Firebase.initializeApp();
     assert(app != null);
@@ -57,9 +61,9 @@ class MyApp extends StatelessWidget {
         builder: (_,theme,__){
           return MaterialApp(
             title: 'Flutter Demo',
-            theme: Provider.of<ThemeProvider>(context).currentThemeData,
+            theme: theme.currentThemeData,
             debugShowCheckedModeBanner: false,
-            home: SplashScreen(),
+            home: isTest?TestScreen():SplashScreen(),
           );
         },
       ),
